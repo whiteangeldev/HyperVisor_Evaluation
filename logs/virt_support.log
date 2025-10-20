@@ -1,0 +1,52 @@
+========================================
+VIRTUALIZATION SUPPORT CHECK
+========================================
+Check Date: 2025-10-17 13:07:56
+
+========================================
+CPU VIRTUALIZATION FEATURES
+========================================
+✓ VT-x (Intel Virtualization Technology) SUPPORTED
+
+✓ EPT (Extended Page Tables) SUPPORTED
+
+✓ VPID (Virtual Processor ID) SUPPORTED
+
+========================================
+IOMMU HARDWARE DETECTION
+========================================
+✓ IOMMU HARDWARE DETECTED
+00:0f.0 IOMMU: Intel Corporation Atom processor C2000 RCEC (rev 02)
+
+========================================
+IOMMU KERNEL STATUS
+========================================
+✗ IOMMU NOT ENABLED (no groups found)
+
+========================================
+KERNEL MODULES
+========================================
+KVM modules:
+kvm_intel             487424  0
+kvm                  1409024  1 kvm_intel
+irqbypass              12288  1 kvm
+
+VFIO modules:
+  No VFIO modules loaded
+
+========================================
+DMESG IOMMU MESSAGES (requires sudo)
+========================================
+  (Skipped - requires root privileges)
+  Run: sudo dmesg | grep -i iommu
+
+========================================
+SUMMARY
+========================================
+VT-x Support:           PASS
+EPT Support:            PASS
+IOMMU Hardware:         PASS
+IOMMU Kernel Status:    FAIL
+
+✓ HARDWARE VIRTUALIZATION CAPABLE
+⚠ IOMMU needs to be enabled in kernel parameters

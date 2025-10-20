@@ -1,0 +1,29 @@
+# GRUB Kernel Parameters for RT Hypervisor POC
+# Generated: 2025-10-17 13:13:51
+# System: AMS764973
+# Total CPUs: 8
+# Housekeeping CPUs: 0,1,2,3
+# Isolated CPUs: 4-7
+
+# === PARAMETER EXPLANATION ===
+# intel_iommu=on      - Enable IOMMU/VT-d for device passthrough
+# iommu=pt              - Use passthrough mode for better performance
+# isolcpus              - Isolate CPUs from general scheduler
+# nohz_full             - Disable scheduler tick on isolated CPUs
+# rcu_nocbs             - Offload RCU callbacks from isolated CPUs
+# nosoftlockup          - Disable soft lockup detector
+# nohz=on               - Enable NO_HZ mode
+# rcu_nocb_poll         - Poll for RCU callbacks
+# idle=poll             - Use polling idle loop (lowest latency, higher power)
+# processor.max_cstate  - Limit C-states for deterministic latency
+# intel_idle.max_cstate - Limit Intel idle driver C-states
+# intel_pstate=disable  - Disable P-state driver for fixed frequency
+# tsc=reliable          - Trust TSC as reliable clock source
+# clocksource=tsc       - Use TSC as primary clock source
+
+# === GRUB_CMDLINE_LINUX_DEFAULT ===
+intel_iommu=on iommu=pt isolcpus=4-7 nohz_full=4-7 rcu_nocbs=4-7 nosoftlockup nohz=on rcu_nocb_poll idle=poll processor.max_cstate=1 intel_idle.max_cstate=0 intel_pstate=disable tsc=reliable clocksource=tsc
+
+# === ALTERNATIVE (lower power, slightly higher latency) ===
+# Replace 'idle=poll' with 'mwait=0' if power consumption is a concern
+

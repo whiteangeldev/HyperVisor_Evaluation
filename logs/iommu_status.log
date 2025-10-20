@@ -1,0 +1,47 @@
+========================================
+IOMMU STATUS CHECK
+========================================
+Check Date: 2025-10-17 13:20:28
+
+========================================
+CURRENT KERNEL CMDLINE
+========================================
+BOOT_IMAGE=/vmlinuz-6.8.0-85-generic root=UUID=71585093-3411-406f-9bcf-dbbec33a3b2c ro intel_iommu=on iommu=pt isolcpus=4-7 nohz_full=4-7 rcu_nocbs=4-7 nosoftlockup nohz=on rcu_nocb_poll idle=poll processor.max_cstate=1 intel_idle.max_cstate=0 intel_pstate=disable tsc=reliable clocksource=tsc
+
+========================================
+IOMMU PARAMETERS CHECK
+========================================
+✓ IOMMU parameter found in cmdline
+✓ IOMMU passthrough mode enabled
+
+========================================
+CPU ISOLATION CHECK
+========================================
+✓ CPU isolation configured: 4-7
+✓ nohz_full configured: 4-7
+✓ rcu_nocbs configured: 4-7
+
+========================================
+IOMMU GROUPS
+========================================
+✗ IOMMU NOT ENABLED: No groups detected
+
+========================================
+DMESG IOMMU MESSAGES
+========================================
+[    0.000000] Command line: BOOT_IMAGE=/vmlinuz-6.8.0-85-generic root=UUID=71585093-3411-406f-9bcf-dbbec33a3b2c ro intel_iommu=on iommu=pt isolcpus=4-7 nohz_full=4-7 rcu_nocbs=4-7 nosoftlockup nohz=on rcu_nocb_poll idle=poll processor.max_cstate=1 intel_idle.max_cstate=0 intel_pstate=disable tsc=reliable clocksource=tsc
+[    0.081658] Kernel command line: BOOT_IMAGE=/vmlinuz-6.8.0-85-generic root=UUID=71585093-3411-406f-9bcf-dbbec33a3b2c ro intel_iommu=on iommu=pt isolcpus=4-7 nohz_full=4-7 rcu_nocbs=4-7 nosoftlockup nohz=on rcu_nocb_poll idle=poll processor.max_cstate=1 intel_idle.max_cstate=0 intel_pstate=disable tsc=reliable clocksource=tsc
+[    0.081765] DMAR: IOMMU enabled
+[    0.416478] iommu: Default domain type: Passthrough (set via kernel command line)
+
+========================================
+CPU ISOLATION VERIFICATION
+========================================
+✓ Isolated CPUs: 4-7
+
+Online CPUs: 0-7
+
+========================================
+STATUS SUMMARY
+========================================
+✓ IOMMU enabled in kernel

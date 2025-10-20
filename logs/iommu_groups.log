@@ -1,0 +1,80 @@
+========================================
+IOMMU GROUPS VERIFICATION
+========================================
+Verification Date: 2025-10-17 17:37:07
+Hostname: AMS764973
+
+========================================
+KERNEL COMMAND LINE (IOMMU params)
+========================================
+root=UUID=71585093-3411-406f-9bcf-dbbec33a3b2c ro intel_iommu=on iommu=pt isolcpus=4-7 nohz_full=4-7 rcu_nocbs=4-7 nosoftlockup nohz=on rcu_nocb_poll idle=poll processor.max_cstate=1 intel_idle.max_cstate=0 intel_pstate=disable tsc=reliable clocksource=tsc
+
+Checking for IOMMU parameters...
+✓ IOMMU enabled in kernel parameters
+✓ IOMMU passthrough mode enabled
+
+========================================
+IOMMU HARDWARE STATUS
+========================================
+✓ IOMMU reported as enabled in dmesg
+[    0.000000] Command line: root=UUID=71585093-3411-406f-9bcf-dbbec33a3b2c ro intel_iommu=on iommu=pt isolcpus=4-7 nohz_full=4-7 rcu_nocbs=4-7 nosoftlockup nohz=on rcu_nocb_poll idle=poll processor.max_cstate=1 intel_idle.max_cstate=0 intel_pstate=disable tsc=reliable clocksource=tsc
+[    1.649983] Kernel command line: root=UUID=71585093-3411-406f-9bcf-dbbec33a3b2c ro intel_iommu=on iommu=pt isolcpus=4-7 nohz_full=4-7 rcu_nocbs=4-7 nosoftlockup nohz=on rcu_nocb_poll idle=poll processor.max_cstate=1 intel_idle.max_cstate=0 intel_pstate=disable tsc=reliable clocksource=tsc
+[    1.650068] DMAR: IOMMU enabled
+[    2.152018] iommu: Default domain type: Passthrough (set via kernel command line)
+
+========================================
+IOMMU GROUPS ENUMERATION
+========================================
+✗ No IOMMU groups found
+   This usually means IOMMU is not properly enabled
+
+========================================
+NETWORK DEVICES (for passthrough)
+========================================
+Intel Ethernet devices:
+00:14.0 Ethernet controller [0200]: Intel Corporation Ethernet Connection I354 2.5 GbE Backplane [8086:1f45] (rev 03)
+00:14.1 Ethernet controller [0200]: Intel Corporation Ethernet Connection I354 2.5 GbE Backplane [8086:1f45] (rev 03)
+
+All Ethernet devices:
+00:14.0 Ethernet controller [0200]: Intel Corporation Ethernet Connection I354 2.5 GbE Backplane [8086:1f45] (rev 03)
+00:14.1 Ethernet controller [0200]: Intel Corporation Ethernet Connection I354 2.5 GbE Backplane [8086:1f45] (rev 03)
+
+========================================
+USB CONTROLLERS (for passthrough)
+========================================
+00:16.0 USB controller [0c03]: Intel Corporation Atom processor C2000 USB Enhanced Host Controller [8086:1f2c] (rev 02)
+
+========================================
+OTHER PCIe DEVICES
+========================================
+00:0f.0 IOMMU [0806]: Intel Corporation Atom processor C2000 RCEC [8086:1f16] (rev 02)
+00:14.0 Ethernet controller [0200]: Intel Corporation Ethernet Connection I354 2.5 GbE Backplane [8086:1f45] (rev 03)
+00:14.1 Ethernet controller [0200]: Intel Corporation Ethernet Connection I354 2.5 GbE Backplane [8086:1f45] (rev 03)
+00:16.0 USB controller [0c03]: Intel Corporation Atom processor C2000 USB Enhanced Host Controller [8086:1f2c] (rev 02)
+
+========================================
+VFIO DRIVER STATUS
+========================================
+Loaded VFIO modules:
+No VFIO modules loaded
+
+Available VFIO modules:
+filename:       /lib/modules/6.8.0-85-generic/kernel/drivers/vfio/vfio.ko.zst
+filename:       /lib/modules/6.8.0-85-generic/kernel/drivers/vfio/pci/vfio-pci.ko.zst
+
+========================================
+IOMMU DEVICE ASSIGNMENT COMPATIBILITY
+========================================
+Checking for devices in isolated IOMMU groups...
+(Single-device groups are ideal for passthrough)
+
+
+========================================
+VERIFICATION SUMMARY
+========================================
+✓ PASS: IOMMU enabled in kernel
+✗ FAIL: No IOMMU groups found
+
+Results: 1 passed, 1 failed
+⚠⚠⚠ IOMMU NOT READY - Review configuration ⚠⚠⚠
+

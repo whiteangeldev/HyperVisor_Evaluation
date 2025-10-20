@@ -1,0 +1,86 @@
+========================================
+XEN RT SCHEDULER VERIFICATION
+========================================
+Verification Date: 2025-10-17 17:37:22
+Hostname: AMS764973
+
+========================================
+XEN HYPERVISOR STATUS
+========================================
+✓ Xen hypervisor is running
+
+nr_cpus                : 8
+cpu_mhz                : 2393.905
+total_memory           : 16346
+xen_version            : 4.17.4-pre
+xen_scheduler          : credit2
+
+========================================
+XEN SCHEDULER INFORMATION
+========================================
+Current Scheduler: credit2
+
+⚠ Credit2 scheduler is active
+  This is suitable for soft real-time but not optimal for hard RT
+  Credit2 provides better CPU isolation than Credit scheduler
+
+========================================
+DOM0 VCPU CONFIGURATION
+========================================
+Dom0 vCPUs: 8
+
+Physical CPU allocation (from kernel cmdline):
+⚠ Dom0 vCPU limit not explicitly set
+⚠ Dom0 vCPU pinning not configured
+
+========================================
+XEN CPUPOOL INFORMATION
+========================================
+CPU Pools:
+Name               CPUs   Sched     Active   Domain count
+Pool-0               8   credit2       y          1
+
+--- CPU Pool: Pool-0 ---
+Cannot list CPUs for pool Pool-0
+
+
+========================================
+DOM0 MEMORY CONFIGURATION
+========================================
+⚠ Dom0 memory not explicitly limited
+  Recommend setting dom0_mem for better isolation
+
+Current Dom0 memory usage:
+               total        used        free      shared  buff/cache   available
+Mem:           3.6Gi       617Mi       2.7Gi       1.2Mi       404Mi       3.0Gi
+
+========================================
+XEN COMMAND LINE PARAMETERS
+========================================
+Xen command line from kernel:
+No Xen-specific parameters found
+
+========================================
+RUNNING DOMAINS
+========================================
+Name                                        ID   Mem VCPUs	State	Time(s)
+Domain-0                                     0  3899     4     r-----   10910.7
+
+========================================
+XEN BOOT PARAMETERS (from GRUB)
+========================================
+Checking /etc/default/grub.d/xen.cfg:
+GRUB_CMDLINE_XEN_DEFAULT="sched=rtds dom0_max_vcpus=2 dom0_vcpus_pin=0,1 dom0_mem=3899M,max:3899M"
+
+========================================
+VERIFICATION SUMMARY
+========================================
+✓ PASS: Xen hypervisor is running
+⚠ NOTE: Credit2 scheduler active (suitable for soft RT)
+⚠ WARN: Dom0 vCPU limit not configured
+⚠ WARN: Dom0 vCPU pinning not configured
+⚠ WARN: Dom0 memory limit not configured
+
+Results: 1 passed, 4 warnings, 0 failed
+✓ Xen is configured and running with minor warnings
+

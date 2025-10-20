@@ -1,0 +1,219 @@
+========================================
+XEN BOOT DIAGNOSIS LOG
+========================================
+Date: 2025-10-17 18:53:00
+
+1. GRUB CONFIGURATION
+========================================
+/etc/default/grub settings:
+GRUB_DEFAULT=0
+GRUB_TIMEOUT_STYLE=menu
+GRUB_TIMEOUT=5
+
+2. GRUB MENU ENTRIES
+========================================
+Main menu entries:
+     0	menuentry 'Xen Hypervisor RT (First Boot)' {
+     1	menuentry 'Ubuntu, with Linux 6.8.0-85-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-6.8.0-85-generic-advanced-71585093-3411-406f-9bcf-dbbec33a3b2c' {
+     2	menuentry 'Ubuntu, with Linux 6.8.0-85-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-6.8.0-85-generic-recovery-71585093-3411-406f-9bcf-dbbec33a3b2c' {
+     3	menuentry 'Ubuntu GNU/Linux, with Xen xen and Linux 6.8.0-85-generic' --class ubuntu --class gnu-linux --class gnu --class os --class xen $menuentry_id_option 'xen-gnulinux-6.8.0-85-generic-advanced-71585093-3411-406f-9bcf-dbbec33a3b2c' {
+     4	menuentry 'Ubuntu GNU/Linux, with Xen xen and Linux 6.8.0-85-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os --class xen $menuentry_id_option 'xen-gnulinux-6.8.0-85-generic-recovery-71585093-3411-406f-9bcf-dbbec33a3b2c' {
+     5	menuentry 'Ubuntu GNU/Linux, with Xen 4.17-amd64 and Linux 6.8.0-85-generic' --class ubuntu --class gnu-linux --class gnu --class os --class xen $menuentry_id_option 'xen-gnulinux-6.8.0-85-generic-advanced-71585093-3411-406f-9bcf-dbbec33a3b2c' {
+     6	menuentry 'Ubuntu GNU/Linux, with Xen 4.17-amd64 and Linux 6.8.0-85-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os --class xen $menuentry_id_option 'xen-gnulinux-6.8.0-85-generic-recovery-71585093-3411-406f-9bcf-dbbec33a3b2c' {
+     7	menuentry 'Ubuntu GNU/Linux, with Xen 4.17-amd64.efi and Linux 6.8.0-85-generic' --class ubuntu --class gnu-linux --class gnu --class os --class xen $menuentry_id_option 'xen-gnulinux-6.8.0-85-generic-advanced-71585093-3411-406f-9bcf-dbbec33a3b2c' {
+     8	menuentry 'Ubuntu GNU/Linux, with Xen 4.17-amd64.efi and Linux 6.8.0-85-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os --class xen $menuentry_id_option 'xen-gnulinux-6.8.0-85-generic-recovery-71585093-3411-406f-9bcf-dbbec33a3b2c' {
+
+Xen entries:
+menuentry 'Xen Hypervisor RT (First Boot)' {
+menuentry 'Ubuntu GNU/Linux, with Xen xen and Linux 6.8.0-85-generic' --class ubuntu --class gnu-linux --class gnu --class os --class xen $menuentry_id_option 'xen-gnulinux-6.8.0-85-generic-advanced-71585093-3411-406f-9bcf-dbbec33a3b2c' {
+menuentry 'Ubuntu GNU/Linux, with Xen xen and Linux 6.8.0-85-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os --class xen $menuentry_id_option 'xen-gnulinux-6.8.0-85-generic-recovery-71585093-3411-406f-9bcf-dbbec33a3b2c' {
+menuentry 'Ubuntu GNU/Linux, with Xen 4.17-amd64 and Linux 6.8.0-85-generic' --class ubuntu --class gnu-linux --class gnu --class os --class xen $menuentry_id_option 'xen-gnulinux-6.8.0-85-generic-advanced-71585093-3411-406f-9bcf-dbbec33a3b2c' {
+menuentry 'Ubuntu GNU/Linux, with Xen 4.17-amd64 and Linux 6.8.0-85-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os --class xen $menuentry_id_option 'xen-gnulinux-6.8.0-85-generic-recovery-71585093-3411-406f-9bcf-dbbec33a3b2c' {
+menuentry 'Ubuntu GNU/Linux, with Xen 4.17-amd64.efi and Linux 6.8.0-85-generic' --class ubuntu --class gnu-linux --class gnu --class os --class xen $menuentry_id_option 'xen-gnulinux-6.8.0-85-generic-advanced-71585093-3411-406f-9bcf-dbbec33a3b2c' {
+menuentry 'Ubuntu GNU/Linux, with Xen 4.17-amd64.efi and Linux 6.8.0-85-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os --class xen $menuentry_id_option 'xen-gnulinux-6.8.0-85-generic-recovery-71585093-3411-406f-9bcf-dbbec33a3b2c' {
+
+3. XEN FILES IN /boot
+========================================
+-rw-r--r-- 1 root root 2.5K Apr  1  2024 /boot/xen-4.17-amd64.config
+-rw-r--r-- 1 root root 2.8M Apr  1  2024 /boot/xen-4.17-amd64.efi
+-rw-r--r-- 1 root root 1.2M Apr  1  2024 /boot/xen-4.17-amd64.gz
+lrwxrwxrwx 1 root root   17 Oct 17 14:09 /boot/xen.gz -> xen-4.17-amd64.gz
+
+4. CURRENT BOOT STATUS
+========================================
+Hypervisor directory:
+total 0
+drwxr-xr-x  7 root root    0 Oct 17 18:53 .
+dr-xr-xr-x 13 root root    0 Oct 17 16:51 ..
+drwxr-xr-x  2 root root    0 Oct 17 18:53 compilation
+-r--r--r--  1 root root 4096 Oct 17 18:53 guest_type
+drwxr-xr-x  2 root root    0 Oct 17 18:53 pmu
+drwxr-xr-x  2 root root    0 Oct 17 16:52 properties
+drwxr-xr-x  2 root root    0 Oct 17 18:53 start_flags
+-r--r--r--  1 root root 4096 Oct 17 16:52 type
+-r--r--r--  1 root root 4096 Oct 17 18:53 uuid
+drwxr-xr-x  2 root root    0 Oct 17 16:52 version
+
+Kernel command line:
+root=UUID=71585093-3411-406f-9bcf-dbbec33a3b2c ro intel_iommu=on iommu=pt isolcpus=4-7 nohz_full=4-7 rcu_nocbs=4-7 nosoftlockup nohz=on rcu_nocb_poll idle=poll processor.max_cstate=1 intel_idle.max_cstate=0 intel_pstate=disable tsc=reliable clocksource=tsc
+
+Loaded kernel:
+Linux AMS764973 6.8.0-85-generic #85-Ubuntu SMP PREEMPT_DYNAMIC Thu Sep 18 15:26:59 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+
+5. BOOT LOGS (last 50 xen/hypervisor lines)
+========================================
+[    1.648925] Booting kernel on Xen
+[    1.648927] Xen version: 4.17.4-pre (preserve-AD)
+[    1.649965] xen: PV spinlocks enabled
+[    1.800517] xen:events: Using FIFO-based ABI
+[    1.800557] xen: --> pirq=1 -> irq=1 (gsi=1)
+[    1.800576] xen: --> pirq=2 -> irq=2 (gsi=2)
+[    1.800589] xen: --> pirq=3 -> irq=3 (gsi=3)
+[    1.800602] xen: --> pirq=4 -> irq=4 (gsi=4)
+[    1.800615] xen: --> pirq=5 -> irq=5 (gsi=5)
+[    1.800627] xen: --> pirq=6 -> irq=6 (gsi=6)
+[    1.800639] xen: --> pirq=7 -> irq=7 (gsi=7)
+[    1.800651] xen: --> pirq=8 -> irq=8 (gsi=8)
+[    1.800663] xen: --> pirq=9 -> irq=9 (gsi=9)
+[    1.800675] xen: --> pirq=10 -> irq=10 (gsi=10)
+[    1.800687] xen: --> pirq=11 -> irq=11 (gsi=11)
+[    1.800699] xen: --> pirq=12 -> irq=12 (gsi=12)
+[    1.800711] xen: --> pirq=13 -> irq=13 (gsi=13)
+[    1.800723] xen: --> pirq=14 -> irq=14 (gsi=14)
+[    1.800736] xen: --> pirq=15 -> irq=15 (gsi=15)
+[    1.805206] clocksource: xen: mask: 0xffffffffffffffff max_cycles: 0x1cd42e4dffb, max_idle_ns: 881590591483 ns
+[    1.805237] Xen: using vcpuop timer interface
+[    1.805250] installing Xen timer for CPU 0
+[    1.850008] VPMU disabled by hypervisor.
+[    1.853221] installing Xen timer for CPU 1
+[    1.854154] installing Xen timer for CPU 2
+[    1.854992] installing Xen timer for CPU 3
+[    1.867230] xen:grant_table: Grant tables using version 1 layout
+[    2.015228] xen: registering gsi 9 triggering 0 polarity 0
+[    2.151957] xen:balloon: Initialising balloon driver
+[    2.255306] xen: registering gsi 8 triggering 1 polarity 0
+[    2.255452] xen: registering gsi 4 triggering 1 polarity 0
+[    2.255584] xen: registering gsi 3 triggering 1 polarity 0
+[    2.316820] xen: registering gsi 23 triggering 0 polarity 1
+[    2.316894] xen: --> pirq=23 -> irq=23 (gsi=23)
+[    2.360688] xen_mcelog: /dev/mcelog registered by Xen
+[    2.361764] xen_acpi_processor: Uploading Xen processor PM info
+[    2.422752] xen_netfront: Initialising Xen virtual ethernet driver
+[    2.423113] xen: registering gsi 23 triggering 0 polarity 1
+[    4.349451] xen: registering gsi 19 triggering 0 polarity 1
+[    4.349525] xen: --> pirq=19 -> irq=19 (gsi=19)
+[    4.392706] xen: registering gsi 20 triggering 0 polarity 1
+[    4.392767] xen: --> pirq=20 -> irq=20 (gsi=20)
+[    4.446536] xen: registering gsi 21 triggering 0 polarity 1
+[    4.446639] xen: --> pirq=21 -> irq=21 (gsi=21)
+[    7.549685] systemd[1]: Detected virtualization xen.
+[    9.962384] xen: registering gsi 16 triggering 0 polarity 1
+[    9.965774] xen: --> pirq=16 -> irq=16 (gsi=16)
+[    9.975107] xen: registering gsi 18 triggering 0 polarity 1
+[    9.988220] xen: --> pirq=18 -> irq=18 (gsi=18)
+[   13.674657] xen:xen_evtchn: Event-channel device installed
+
+6. JOURNAL LOGS (xen/grub related)
+========================================
+Oct 17 16:52:02 AMS764973 kernel: xen: --> pirq=23 -> irq=23 (gsi=23)
+Oct 17 16:52:02 AMS764973 kernel: xen_mcelog: /dev/mcelog registered by Xen
+Oct 17 16:52:02 AMS764973 kernel: xen_acpi_processor: Uploading Xen processor PM info
+Oct 17 16:52:02 AMS764973 kernel: xen_netfront: Initialising Xen virtual ethernet driver
+Oct 17 16:52:02 AMS764973 kernel: xen: registering gsi 23 triggering 0 polarity 1
+Oct 17 16:52:02 AMS764973 kernel: xen: registering gsi 19 triggering 0 polarity 1
+Oct 17 16:52:02 AMS764973 kernel: xen: --> pirq=19 -> irq=19 (gsi=19)
+Oct 17 16:52:02 AMS764973 kernel: xen: registering gsi 20 triggering 0 polarity 1
+Oct 17 16:52:02 AMS764973 kernel: xen: --> pirq=20 -> irq=20 (gsi=20)
+Oct 17 16:52:02 AMS764973 kernel: xen: registering gsi 21 triggering 0 polarity 1
+Oct 17 16:52:02 AMS764973 kernel: xen: --> pirq=21 -> irq=21 (gsi=21)
+Oct 17 16:52:02 AMS764973 systemd[1]: Detected virtualization xen.
+Oct 17 16:52:04 AMS764973 kernel: xen: registering gsi 16 triggering 0 polarity 1
+Oct 17 16:52:04 AMS764973 kernel: xen: --> pirq=16 -> irq=16 (gsi=16)
+Oct 17 16:52:04 AMS764973 kernel: xen: registering gsi 18 triggering 0 polarity 1
+Oct 17 16:52:04 AMS764973 kernel: xen: --> pirq=18 -> irq=18 (gsi=18)
+Oct 17 16:52:05 AMS764973 systemd[1]: Starting grub-common.service - Record successful boot for GRUB...
+Oct 17 16:52:06 AMS764973 systemd[1]: grub-common.service: Deactivated successfully.
+Oct 17 16:52:06 AMS764973 systemd[1]: Finished grub-common.service - Record successful boot for GRUB.
+Oct 17 16:52:06 AMS764973 systemd[1]: Starting grub-initrd-fallback.service - GRUB failed boot detection...
+Oct 17 16:52:06 AMS764973 systemd[1]: grub-initrd-fallback.service: Deactivated successfully.
+Oct 17 16:52:06 AMS764973 systemd[1]: Finished grub-initrd-fallback.service - GRUB failed boot detection.
+Oct 17 16:52:07 AMS764973 systemd[1]: Starting xen.service - LSB: Xen daemons...
+Oct 17 16:52:07 AMS764973 xen[871]:  * Starting Xen daemons
+Oct 17 16:52:07 AMS764973 kernel: xen:xen_evtchn: Event-channel device installed
+Oct 17 16:52:08 AMS764973 xen[871]:    ...done.
+Oct 17 16:52:08 AMS764973 systemd[1]: Started xen.service - LSB: Xen daemons.
+Oct 17 17:26:16 AMS764973 sudo[9336]:   ubuntu : TTY=pts/1 ; PWD=/home/ubuntu/rt-hypervisor-poc/scripts ; USER=root ; COMMAND=./16_verify_xen.sh
+Oct 17 17:37:22 AMS764973 sudo[11971]:   ubuntu : TTY=pts/1 ; PWD=/home/ubuntu/rt-hypervisor-poc/scripts ; USER=root ; COMMAND=./16_verify_xen_rt.sh
+Oct 17 18:53:00 AMS764973 sudo[31702]:   ubuntu : TTY=pts/1 ; PWD=/home/ubuntu/rt-hypervisor-poc/scripts ; USER=root ; COMMAND=./09d_diagnose_xen_boot.sh
+
+7. XEN PACKAGES
+========================================
+grub-xen-bin 2.12-1ubuntu7.3
+grub-xen-host 2.12-1ubuntu7.3
+libxencall1t64:amd64 4.17.3+10-g091466ba55-1.1ubuntu3
+libxendevicemodel1t64:amd64 4.17.3+10-g091466ba55-1.1ubuntu3
+libxenevtchn1t64:amd64 4.17.3+10-g091466ba55-1.1ubuntu3
+libxenforeignmemory1t64:amd64 4.17.3+10-g091466ba55-1.1ubuntu3
+libxengnttab1t64:amd64 4.17.3+10-g091466ba55-1.1ubuntu3
+libxenhypfs1t64:amd64 4.17.3+10-g091466ba55-1.1ubuntu3
+libxenmisc4.17t64:amd64 4.17.3+10-g091466ba55-1.1ubuntu3
+libxenstore4t64:amd64 4.17.3+10-g091466ba55-1.1ubuntu3
+libxentoolcore1t64:amd64 4.17.3+10-g091466ba55-1.1ubuntu3
+libxentoollog1t64:amd64 4.17.3+10-g091466ba55-1.1ubuntu3
+qemu-system-xen 1:8.2.2+ds-0ubuntu1.10
+xen-hypervisor-4.17-amd64 4.17.3+10-g091466ba55-1.1ubuntu3
+xen-hypervisor-common 4.17.3+10-g091466ba55-1.1ubuntu3
+xen-tools 4.9.2-1
+xen-utils-4.17 4.17.3+10-g091466ba55-1.1ubuntu3
+xen-utils-common 4.17.3+10-g091466ba55-1.1ubuntu3
+xenstore-utils 4.17.3+10-g091466ba55-1.1ubuntu3
+
+8. GRUB XEN CONFIGURATION
+========================================
+xen.cfg found:
+# Xen Hypervisor Configuration
+# Generated: 2025-10-17 13:36:09
+
+# Xen hypervisor command line options
+# Note: dom0_vcpus_pin needs the actual CPU list
+GRUB_CMDLINE_XEN_DEFAULT="sched=rtds dom0_max_vcpus=2 dom0_vcpus_pin=0,1 dom0_mem=3899M,max:3899M"
+
+# Set Xen as default boot option
+# GRUB_DEFAULT="Xen"
+
+9. ANALYSIS
+========================================
+✓ Xen entries exist in GRUB
+
+GRUB_DEFAULT is set to: 0
+⚠ WARNING: GRUB_DEFAULT=0 may boot regular kernel
+   Check if Xen is first entry
+
+✓ /sys/hypervisor exists and has content
+  But xl info still fails - check Xen modules
+
+10. RECOMMENDED ACTIONS
+========================================
+Xen entries exist. Checking boot configuration...
+✓ First entry IS Xen - should boot automatically
+
+Possible issues:
+1. Xen hypervisor binary problem
+2. Missing Xen modules
+3. GRUB not actually using the config
+
+Try:
+  sudo update-grub
+  sudo reboot
+
+11. MANUAL GRUB CHECK
+========================================
+To manually check GRUB entries with indices:
+     0	menuentry 'Xen Hypervisor RT (First Boot)' {
+     3	menuentry 'Ubuntu GNU/Linux, with Xen xen and Linux 6.8.0-85-generic' --class ubuntu --class gnu-linux --class gnu --class os --class xen $menuentry_id_option 'xen-gnulinux-6.8.0-85-generic-advanced-71585093-3411-406f-9bcf-dbbec33a3b2c' {
+     4	menuentry 'Ubuntu GNU/Linux, with Xen xen and Linux 6.8.0-85-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os --class xen $menuentry_id_option 'xen-gnulinux-6.8.0-85-generic-recovery-71585093-3411-406f-9bcf-dbbec33a3b2c' {
+     5	menuentry 'Ubuntu GNU/Linux, with Xen 4.17-amd64 and Linux 6.8.0-85-generic' --class ubuntu --class gnu-linux --class gnu --class os --class xen $menuentry_id_option 'xen-gnulinux-6.8.0-85-generic-advanced-71585093-3411-406f-9bcf-dbbec33a3b2c' {
+     6	menuentry 'Ubuntu GNU/Linux, with Xen 4.17-amd64 and Linux 6.8.0-85-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os --class xen $menuentry_id_option 'xen-gnulinux-6.8.0-85-generic-recovery-71585093-3411-406f-9bcf-dbbec33a3b2c' {
+     7	menuentry 'Ubuntu GNU/Linux, with Xen 4.17-amd64.efi and Linux 6.8.0-85-generic' --class ubuntu --class gnu-linux --class gnu --class os --class xen $menuentry_id_option 'xen-gnulinux-6.8.0-85-generic-advanced-71585093-3411-406f-9bcf-dbbec33a3b2c' {
+     8	menuentry 'Ubuntu GNU/Linux, with Xen 4.17-amd64.efi and Linux 6.8.0-85-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os --class xen $menuentry_id_option 'xen-gnulinux-6.8.0-85-generic-recovery-71585093-3411-406f-9bcf-dbbec33a3b2c' {
+
