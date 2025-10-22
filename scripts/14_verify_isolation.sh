@@ -65,10 +65,36 @@ echo ""
         if [ -n "$ISOLATED" ]; then
             echo "✓ Isolated CPUs: $ISOLATED"
         else
-            echo "⚠ No CPUs isolated (file exists but empty)"
+            echo "⚠ No CPUs isolated in sysfs (file exists but empty)"
+            echo ""
+            echo "NOTE: This is NORMAL when running under Xen Dom0"
+            echo ""
+            echo "CPU isolation for Xen works differently:"
+            echo "  - Dom0 (host) uses CPUs configured via dom0_max_vcpus"
+            echo "  - Guest VMs are pinned to specific physical CPUs"
+            echo "  - The kernel parameters (isolcpus, nohz_full, rcu_nocbs) still apply"
+            echo "  - Isolated CPUs are reserved for guest VM assignment"
+            echo ""
+            echo "To verify Dom0 CPU configuration:"
+            echo "  sudo xl vcpu-list 0"
+            echo ""
         fi
     else
         echo "⚠ /sys/devices/system/cpu/isolated not found"
+        echo ""
+        echo "NOTE: This is NORMAL when running under Xen Dom0"
+        echo "CPU isolation is managed by the Xen hypervisor"
+    fi
+    
+    # Add check for actual CPU affinity
+    echo ""
+    echo "Checking CPU assignment from kernel parameters..."
+    ISOLCPUS_PARAM=$(grep -o "isolcpus=[^ ]*" /proc/cmdline | cut -d= -f2)
+    if [ -n "$ISOLCPUS_PARAM" ]; then
+        echo "✓ isolcpus parameter: $ISOLCPUS_PARAM"
+        echo "  These CPUs are isolated from the general kernel scheduler"
+    else
+        echo "✗ No isolcpus parameter found in kernel command line"
     fi
     echo ""
     
@@ -125,6 +151,39 @@ echo ""
         done
     else
         echo "No isolated CPUs detected"
+    fi
+    echo ""
+    
+    echo "========================================"
+    echo "XEN DOM0 CPU CONFIGURATION"
+    echo "========================================"
+    if command -v xl &> /dev/null; then
+        XL_CMD="xl"
+        [ "$EUID" -ne 0 ] && XL_CMD="sudo xl"
+        
+        if $XL_CMD info &> /dev/null 2>&1; then
+            echo "✓ Running under Xen hypervisor"
+            echo ""
+            echo "Dom0 vCPU assignment:"
+            $XL_CMD vcpu-list 0 2>/dev/null || echo "Cannot query Dom0 vCPUs (requires sudo)"
+            echo ""
+            
+            echo "Total physical CPUs available:"
+            $XL_CMD info 2>/dev/null | grep "^nr_cpus" || echo "Cannot query (requires sudo)"
+            echo ""
+            
+            echo "NOTE: Under Xen, CPU isolation works as follows:"
+            echo "  1. Dom0 (host) runs on CPUs configured via dom0_max_vcpus"
+            echo "  2. Guest VMs can be pinned to specific physical CPUs"
+            echo "  3. Use 'xl vcpu-pin <domain> <vcpu> <pcpu>' to pin guest vCPUs"
+            echo "  4. Isolated CPUs (from isolcpus param) are for guest VM use"
+            echo ""
+        else
+            echo "Xen tools installed but not running under Xen"
+        fi
+    else
+        echo "Not running under Xen hypervisor"
+        echo "(Standard Linux kernel CPU isolation applies)"
     fi
     echo ""
     

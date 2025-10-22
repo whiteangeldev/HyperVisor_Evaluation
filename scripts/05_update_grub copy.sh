@@ -86,6 +86,26 @@ echo "Updated GRUB_CMDLINE_LINUX_DEFAULT:"
 grep "^GRUB_CMDLINE_LINUX_DEFAULT=" "$GRUB_DEFAULT"
 echo ""
 
+# Ensure GRUB menu is visible for hypervisor selection
+echo "Configuring GRUB menu visibility..."
+
+# Update GRUB_TIMEOUT_STYLE to show menu
+if grep -q "^GRUB_TIMEOUT_STYLE=" "$GRUB_DEFAULT"; then
+    sed -i "s/^GRUB_TIMEOUT_STYLE=.*/GRUB_TIMEOUT_STYLE=menu/" "$GRUB_DEFAULT"
+else
+    echo "GRUB_TIMEOUT_STYLE=menu" >> "$GRUB_DEFAULT"
+fi
+
+# Update GRUB_TIMEOUT to 10 seconds
+if grep -q "^GRUB_TIMEOUT=" "$GRUB_DEFAULT"; then
+    sed -i "s/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=10/" "$GRUB_DEFAULT"
+else
+    echo "GRUB_TIMEOUT=10" >> "$GRUB_DEFAULT"
+fi
+
+echo "✓ GRUB menu visibility configured (10 second timeout)"
+echo ""
+
 # Update GRUB
 echo "Running update-grub..."
 if command -v update-grub &> /dev/null; then

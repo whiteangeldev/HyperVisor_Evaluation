@@ -47,9 +47,9 @@ chmod +x "$INSTALL_DIR/set_irq_affinity.sh"
 echo "✓ Script installed and made executable"
 echo ""
 
-echo "Step 2: Update service file to use installed script path..."
-sed "s|$SCRIPT_DIR/set_irq_affinity.sh|$INSTALL_DIR/set_irq_affinity.sh|g" "$SERVICE_FILE" > "$SYSTEMD_DIR/set-irq-affinity.service"
-echo "✓ Service file installed with correct path"
+echo "Step 2: Install service file to systemd..."
+cp "$SERVICE_FILE" "$SYSTEMD_DIR/irq-affinity.service"
+echo "✓ Service file installed"
 echo ""
 
 echo "Step 3: Reload systemd daemon..."
@@ -57,18 +57,30 @@ systemctl daemon-reload
 echo "✓ Systemd daemon reloaded"
 echo ""
 
+echo "Step 3a: Disable irqbalance (if present)..."
+if systemctl list-unit-files | grep -q "^irqbalance.service"; then
+    echo "  Found irqbalance service, disabling it..."
+    systemctl stop irqbalance 2>/dev/null || true
+    systemctl disable irqbalance 2>/dev/null || true
+    systemctl mask irqbalance 2>/dev/null || true
+    echo "  ✓ irqbalance disabled and masked"
+else
+    echo "  ℹ irqbalance not installed (this is fine)"
+fi
+echo ""
+
 echo "Step 4: Enable service..."
-systemctl enable set-irq-affinity.service
+systemctl enable irq-affinity.service
 echo "✓ Service enabled"
 echo ""
 
 echo "Step 5: Start service..."
-systemctl start set-irq-affinity.service
+systemctl start irq-affinity.service
 echo "✓ Service started"
 echo ""
 
 echo "Step 6: Check service status..."
-systemctl status set-irq-affinity.service --no-pager || true
+systemctl status irq-affinity.service --no-pager || true
 echo ""
 
 echo "========================================"
@@ -77,9 +89,10 @@ echo "========================================"
 echo "✓ IRQ affinity script installed at: $INSTALL_DIR/set_irq_affinity.sh"
 echo "✓ IRQ affinity service installed and enabled"
 echo "✓ Service is now running"
+echo "✓ irqbalance disabled (if it was present)"
 echo ""
 echo "Service will run automatically on boot"
-echo "To check status: systemctl status set-irq-affinity.service"
-echo "To restart: sudo systemctl restart set-irq-affinity.service"
+echo "To check status: systemctl status irq-affinity.service"
+echo "To restart: sudo systemctl restart irq-affinity.service"
 echo ""
 

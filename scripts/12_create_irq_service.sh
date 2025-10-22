@@ -22,6 +22,7 @@ echo "Timestamp: $(date '+%Y-%m-%d %H:%M:%S')"
 echo ""
 
 # Generate systemd service file
+# NOTE: The script will be installed to /usr/local/bin/ by 13_install_irq_service.sh
 cat > "$SERVICE_FILE" << 'EOF'
 [Unit]
 Description=IRQ Affinity Configuration for RT Hypervisor
@@ -31,7 +32,7 @@ Before=xen.service libvirtd.service
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/home/ubuntu/rt-hypervisor-poc/scripts/set_irq_affinity.sh
+ExecStart=/usr/local/bin/set_irq_affinity.sh
 StandardOutput=journal
 StandardError=journal
 
@@ -44,6 +45,9 @@ echo "✓ Output saved to: $SERVICE_FILE"
 echo ""
 echo "Service details:"
 cat "$SERVICE_FILE"
+echo ""
+echo "NOTE: The service references /usr/local/bin/set_irq_affinity.sh"
+echo "      This will be installed by the next step (13_install_irq_service.sh)"
 echo ""
 echo "Next steps:"
 echo "1. Review the service: cat $SERVICE_FILE"

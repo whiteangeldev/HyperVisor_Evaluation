@@ -102,11 +102,125 @@ echo ""
             done
         else
             echo "✗ No IOMMU groups found"
-            echo "   This usually means IOMMU is not properly enabled"
+            echo ""
+            echo "========================================" 
+            echo "TROUBLESHOOTING: NO IOMMU GROUPS"
+            echo "========================================"
+            echo ""
+            echo "This means IOMMU is not properly initialized."
+            echo ""
+            echo "STEP 1: Check BIOS Settings"
+            echo "  ⚠️  CRITICAL: Enable these in BIOS/UEFI:"
+            echo "     - Intel VT-x (Virtualization Technology)"
+            echo "     - Intel VT-d (Virtualization for Directed I/O)"
+            echo "  Common locations:"
+            echo "     - Advanced → CPU Configuration"
+            echo "     - Advanced → Chipset Configuration"
+            echo "     - Security → Virtualization"
+            echo ""
+            echo "STEP 2: Verify Kernel Parameters"
+            echo "  Current cmdline:"
+            cat /proc/cmdline
+            echo ""
+            echo "  Required: intel_iommu=on iommu=pt"
+            if ! grep -qE "(intel_iommu=on|amd_iommu=on)" /proc/cmdline; then
+                echo "  ✗ MISSING: intel_iommu=on parameter"
+                echo ""
+                echo "  To fix:"
+                echo "    cd ~/rt-hypervisor-poc/scripts"
+                echo "    ./04_generate_grub_config.sh"
+                echo "    sudo ./05_update_grub.sh"
+                echo "    sudo reboot"
+            fi
+            echo ""
+            echo "STEP 3: Check dmesg for IOMMU errors"
+            if dmesg | grep -i "iommu" > /dev/null 2>&1; then
+                dmesg | grep -i "iommu" | tail -15
+            else
+                echo "  No IOMMU messages in dmesg (hardware may not support it)"
+            fi
+            echo ""
+            echo "STEP 4: Verify Hardware Support"
+            if grep -q "vmx\|svm" /proc/cpuinfo; then
+                echo "  ✓ CPU supports virtualization"
+            else
+                echo "  ✗ CPU does not support virtualization"
+            fi
+            echo ""
+            echo "STEP 5: Check if running under Xen"
+            if command -v xl &> /dev/null && xl info &> /dev/null 2>&1; then
+                XL_CMD="xl"
+                [ "$EUID" -ne 0 ] && XL_CMD="sudo xl"
+                echo "  ✓ Running under Xen hypervisor"
+                echo "  NOTE: Under Xen, IOMMU groups may not appear in Dom0 sysfs"
+                echo "  Check Xen's IOMMU status instead:"
+                echo ""
+                $XL_CMD dmesg 2>/dev/null | grep -i iommu | head -20 || echo "  Cannot query Xen (requires sudo)"
+            else
+                echo "  Not running under Xen"
+            fi
+            echo ""
         fi
     else
         echo "✗ /sys/kernel/iommu_groups directory not found"
-        echo "   IOMMU is not active on this system"
+        echo ""
+        echo "========================================" 
+        echo "TROUBLESHOOTING: IOMMU NOT ACTIVE"
+        echo "========================================"
+        echo ""
+        echo "IOMMU is NOT active on this system. This means:"
+        echo "  - Device passthrough will NOT work"
+        echo "  - VMs cannot have direct device access"
+        echo ""
+        echo "REQUIRED FIXES (in order):"
+        echo ""
+        echo "1. Enable VT-d in BIOS/UEFI"
+        echo "   ⚠️  THIS IS THE MOST COMMON ISSUE"
+        echo "   - Reboot and enter BIOS (usually Del, F2, or F10)"
+        echo "   - Look for 'Intel VT-d' or 'Virtualization for Directed I/O'"
+        echo "   - Set to ENABLED"
+        echo "   - Also enable 'Intel VT-x' if not already enabled"
+        echo "   - Save and exit BIOS"
+        echo ""
+        echo "2. Verify kernel parameters include:"
+        echo "   intel_iommu=on iommu=pt"
+        echo ""
+        echo "   Current parameters:"
+        cat /proc/cmdline
+        echo ""
+        if ! grep -qE "(intel_iommu=on|amd_iommu=on)" /proc/cmdline; then
+            echo "   ✗ MISSING intel_iommu=on parameter"
+            echo ""
+            echo "   To add kernel parameters:"
+            echo "     cd ~/rt-hypervisor-poc/scripts"
+            echo "     ./04_generate_grub_config.sh"
+            echo "     sudo ./05_update_grub.sh"
+            echo "     sudo reboot"
+        fi
+        echo ""
+        echo "3. Check dmesg for IOMMU hardware detection:"
+        if dmesg | grep -i "iommu" > /dev/null 2>&1; then
+            dmesg | grep -i "iommu" | grep -i "detected\|enabled\|disabled\|error" | tail -10
+        else
+            echo "   No IOMMU messages found - hardware may not support VT-d"
+            echo "   Check: grep -E 'vmx|svm' /proc/cpuinfo"
+        fi
+        echo ""
+        echo "4. If running under Xen hypervisor:"
+        if command -v xl &> /dev/null; then
+            XL_CMD="xl"
+            [ "$EUID" -ne 0 ] && XL_CMD="sudo xl"
+            if $XL_CMD info &> /dev/null 2>&1; then
+                echo "   ✓ Xen is running"
+                echo "   Under Xen, check IOMMU status with:"
+                echo "     sudo xl dmesg | grep -i iommu"
+                echo ""
+                $XL_CMD dmesg 2>/dev/null | grep -i iommu | head -20 || echo "   (requires sudo to view)"
+            fi
+        else
+            echo "   Xen not detected"
+        fi
+        echo ""
     fi
     echo ""
     
