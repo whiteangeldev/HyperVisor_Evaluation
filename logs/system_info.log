@@ -1,67 +1,71 @@
 ========================================
 SYSTEM INFORMATION BASELINE
 ========================================
-Collection Date: 2025-10-17 13:07:00
-Hostname: AMS764973
+Collection Date: 2025-10-25 07:05:46
+Hostname: AMS765477
 
 ========================================
 OS INFORMATION
 ========================================
-PRETTY_NAME="Ubuntu 24.04.2 LTS"
+PRETTY_NAME="Ubuntu 22.04.5 LTS"
 NAME="Ubuntu"
-VERSION_ID="24.04"
-VERSION="24.04.2 LTS (Noble Numbat)"
-VERSION_CODENAME=noble
+VERSION_ID="22.04"
+VERSION="22.04.5 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
 ID=ubuntu
 ID_LIKE=debian
 HOME_URL="https://www.ubuntu.com/"
 SUPPORT_URL="https://help.ubuntu.com/"
 BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
 PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
-UBUNTU_CODENAME=noble
-LOGO=ubuntu-logo
+UBUNTU_CODENAME=jammy
 
-Linux AMS764973 6.8.0-85-generic #85-Ubuntu SMP PREEMPT_DYNAMIC Thu Sep 18 15:26:59 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+Linux AMS765477 5.15.0-160-generic #170-Ubuntu SMP Wed Oct 1 10:06:56 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
 
 ========================================
 CPU INFORMATION
 ========================================
-Architecture:                         x86_64
-CPU op-mode(s):                       32-bit, 64-bit
-Address sizes:                        36 bits physical, 48 bits virtual
-Byte Order:                           Little Endian
-CPU(s):                               8
-On-line CPU(s) list:                  0-7
-Vendor ID:                            GenuineIntel
-Model name:                           Intel(R) Atom(TM) CPU  C2750  @ 2.40GHz
-CPU family:                           6
-Model:                                77
-Thread(s) per core:                   1
-Core(s) per socket:                   8
-Socket(s):                            1
-Stepping:                             8
-BogoMIPS:                             4788.00
-Flags:                                fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm sse4_1 sse4_2 movbe popcnt tsc_deadline_timer aes rdrand lahf_lm 3dnowprefetch cpuid_fault epb pti ibrs ibpb stibp tpr_shadow flexpriority ept vpid tsc_adjust smep erms dtherm ida arat vnmi md_clear
-Virtualization:                       VT-x
-L1d cache:                            192 KiB (8 instances)
-L1i cache:                            256 KiB (8 instances)
-L2 cache:                             4 MiB (4 instances)
-NUMA node(s):                         1
-NUMA node0 CPU(s):                    0-7
-Vulnerability Gather data sampling:   Not affected
-Vulnerability Itlb multihit:          Not affected
-Vulnerability L1tf:                   Not affected
-Vulnerability Mds:                    Mitigation; Clear CPU buffers; SMT disabled
-Vulnerability Meltdown:               Mitigation; PTI
-Vulnerability Mmio stale data:        Unknown: No mitigations
-Vulnerability Reg file data sampling: Not affected
-Vulnerability Retbleed:               Not affected
-Vulnerability Spec rstack overflow:   Not affected
-Vulnerability Spec store bypass:      Not affected
-Vulnerability Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sanitization
-Vulnerability Spectre v2:             Mitigation; Retpolines; IBPB conditional; IBRS_FW; STIBP disabled; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected
-Vulnerability Srbds:                  Not affected
-Vulnerability Tsx async abort:        Not affected
+Architecture:                            x86_64
+CPU op-mode(s):                          32-bit, 64-bit
+Address sizes:                           36 bits physical, 48 bits virtual
+Byte Order:                              Little Endian
+CPU(s):                                  8
+On-line CPU(s) list:                     0-7
+Vendor ID:                               GenuineIntel
+Model name:                              Intel(R) Atom(TM) CPU  C2750  @ 2.40GHz
+CPU family:                              6
+Model:                                   77
+Thread(s) per core:                      1
+Core(s) per socket:                      8
+Socket(s):                               1
+Stepping:                                8
+Frequency boost:                         enabled
+CPU max MHz:                             2401.0000
+CPU min MHz:                             1200.0000
+BogoMIPS:                                4800.19
+Flags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm sse4_1 sse4_2 movbe popcnt tsc_deadline_timer aes rdrand lahf_lm 3dnowprefetch cpuid_fault epb pti ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid tsc_adjust smep erms dtherm ida arat md_clear
+Virtualization:                          VT-x
+L1d cache:                               192 KiB (8 instances)
+L1i cache:                               256 KiB (8 instances)
+L2 cache:                                4 MiB (4 instances)
+NUMA node(s):                            1
+NUMA node0 CPU(s):                       0-7
+Vulnerability Gather data sampling:      Not affected
+Vulnerability Indirect target selection: Not affected
+Vulnerability Itlb multihit:             Not affected
+Vulnerability L1tf:                      Not affected
+Vulnerability Mds:                       Mitigation; Clear CPU buffers; SMT disabled
+Vulnerability Meltdown:                  Mitigation; PTI
+Vulnerability Mmio stale data:           Unknown: No mitigations
+Vulnerability Reg file data sampling:    Not affected
+Vulnerability Retbleed:                  Not affected
+Vulnerability Spec rstack overflow:      Not affected
+Vulnerability Spec store bypass:         Not affected
+Vulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:                Mitigation; Retpolines; IBPB conditional; IBRS_FW; STIBP disabled; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected
+Vulnerability Srbds:                     Not affected
+Vulnerability Tsa:                       Not affected
+Vulnerability Tsx async abort:           Not affected
 
 ========================================
 CPU FLAGS (First Processor)
@@ -157,77 +161,88 @@ vmx flags	: vnmi preemption_timer invvpid ept_x_only flexpriority tsc_offset vtp
 MEMORY INFORMATION
 ========================================
                total        used        free      shared  buff/cache   available
-Mem:            15Gi       914Mi        14Gi       1.2Mi       921Mi        14Gi
+Mem:            15Gi       566Mi        13Gi       1.0Mi       1.8Gi        14Gi
 Swap:          1.0Gi          0B       1.0Gi
 
-MemTotal:       16337936 kB
-MemFree:        14748860 kB
-MemAvailable:   15401600 kB
-Buffers:           62340 kB
-Cached:           833552 kB
+MemTotal:       16358852 kB
+MemFree:        13919884 kB
+MemAvailable:   15466792 kB
+Buffers:          275348 kB
+Cached:          1494692 kB
 SwapCached:            0 kB
-Active:           614744 kB
-Inactive:         706240 kB
-Active(anon):     435040 kB
-Inactive(anon):        0 kB
-Active(file):     179704 kB
-Inactive(file):   706240 kB
-Unevictable:       27444 kB
-Mlocked:           27444 kB
+Active:          1022348 kB
+Inactive:        1133884 kB
+Active(anon):       1208 kB
+Inactive(anon):   395248 kB
+Active(file):    1021140 kB
+Inactive(file):   738636 kB
+Unevictable:       27652 kB
+Mlocked:           27652 kB
 SwapTotal:       1048572 kB
 SwapFree:        1048572 kB
-Zswap:                 0 kB
-Zswapped:              0 kB
-Dirty:               180 kB
+Dirty:               136 kB
 Writeback:             0 kB
+AnonPages:        413740 kB
+Mapped:           248168 kB
 
 ========================================
 PCI DEVICES
 ========================================
 00:00.0 Host bridge [0600]: Intel Corporation Atom processor C2000 SoC Transaction Router [8086:1f01] (rev 02)
+00:01.0 PCI bridge [0604]: Intel Corporation Atom processor C2000 PCIe Root Port 1 [8086:1f10] (rev 02)
+00:02.0 PCI bridge [0604]: Intel Corporation Atom processor C2000 PCIe Root Port 2 [8086:1f11] (rev 02)
+00:03.0 PCI bridge [0604]: Intel Corporation Atom processor C2000 PCIe Root Port 3 [8086:1f12] (rev 02)
 00:0e.0 Host bridge [0600]: Intel Corporation Atom processor C2000 RAS [8086:1f14] (rev 02)
 00:0f.0 IOMMU [0806]: Intel Corporation Atom processor C2000 RCEC [8086:1f16] (rev 02)
 00:13.0 System peripheral [0880]: Intel Corporation Atom processor C2000 SMBus 2.0 [8086:1f15] (rev 02)
-00:14.0 Ethernet controller [0200]: Intel Corporation Ethernet Connection I354 2.5 GbE Backplane [8086:1f45] (rev 03)
-00:14.1 Ethernet controller [0200]: Intel Corporation Ethernet Connection I354 2.5 GbE Backplane [8086:1f45] (rev 03)
+00:14.0 Ethernet controller [0200]: Intel Corporation Ethernet Connection I354 [8086:1f41] (rev 03)
+00:14.1 Ethernet controller [0200]: Intel Corporation Ethernet Connection I354 [8086:1f41] (rev 03)
 00:16.0 USB controller [0c03]: Intel Corporation Atom processor C2000 USB Enhanced Host Controller [8086:1f2c] (rev 02)
 00:18.0 SATA controller [0106]: Intel Corporation Atom processor C2000 AHCI SATA3 Controller [8086:1f32] (rev 02)
 00:1f.0 ISA bridge [0601]: Intel Corporation Atom processor C2000 PCU [8086:1f38] (rev 02)
 00:1f.3 SMBus [0c05]: Intel Corporation Atom processor C2000 PCU SMBus [8086:1f3c] (rev 02)
+02:00.0 PCI bridge [0604]: ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge [1a03:1150] (rev 03)
+03:00.0 VGA compatible controller [0300]: ASPEED Technology, Inc. ASPEED Graphics Family [1a03:2000] (rev 30)
 
 ========================================
 NETWORK INTERFACES
 ========================================
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-2: enp0s20f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
-    link/ether 00:07:cb:0b:70:c8 brd ff:ff:ff:ff:ff:ff
-3: enp0s20f1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9000 qdisc mq state UP mode DEFAULT group default qlen 1000
-    link/ether 00:07:cb:0b:70:c9 brd ff:ff:ff:ff:ff:ff
+2: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 0c:c4:7a:0f:86:b0 brd ff:ff:ff:ff:ff:ff
+    altname enp0s20f0
+3: eno2: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 0c:c4:7a:0f:86:b1 brd ff:ff:ff:ff:ff:ff
+    altname enp0s20f1
 
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
        valid_lft forever preferred_lft forever
-    inet6 ::1/128 scope host noprefixroute 
+    inet6 ::1/128 scope host 
        valid_lft forever preferred_lft forever
-2: enp0s20f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
-    link/ether 00:07:cb:0b:70:c8 brd ff:ff:ff:ff:ff:ff
-    inet 51.15.1.51/24 metric 100 brd 51.15.1.255 scope global enp0s20f0
+2: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 0c:c4:7a:0f:86:b0 brd ff:ff:ff:ff:ff:ff
+    altname enp0s20f0
+    inet 51.15.25.197/24 metric 100 brd 51.15.25.255 scope global eno1
        valid_lft forever preferred_lft forever
-    inet6 fe80::207:cbff:fe0b:70c8/64 scope link 
+    inet6 fe80::ec4:7aff:fe0f:86b0/64 scope link 
        valid_lft forever preferred_lft forever
-3: enp0s20f1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9000 qdisc mq state UP group default qlen 1000
-    link/ether 00:07:cb:0b:70:c9 brd ff:ff:ff:ff:ff:ff
-    inet 10.91.169.26/24 metric 100 brd 10.91.169.255 scope global dynamic enp0s20f1
-       valid_lft 386777227sec preferred_lft 386777227sec
-    inet6 fe80::207:cbff:fe0b:70c9/64 scope link 
-       valid_lft forever preferred_lft forever
+3: eno2: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 0c:c4:7a:0f:86:b1 brd ff:ff:ff:ff:ff:ff
+    altname enp0s20f1
 
 ========================================
 BLOCK DEVICES
 ========================================
 NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+loop0    7:0    0  63.9M  1 loop /snap/core20/2318
+loop1    7:1    0    87M  1 loop /snap/lxd/29351
+loop2    7:2    0  38.8M  1 loop /snap/snapd/21759
+loop3    7:3    0  50.9M  1 loop /snap/snapd/25577
+loop4    7:4    0  63.8M  1 loop /snap/core20/2669
+loop5    7:5    0  91.4M  1 loop /snap/lxd/35819
 sda      8:0    0 238.5G  0 disk 
 ├─sda1   8:1    0     1M  0 part 
 ├─sda2   8:2    0     1G  0 part /boot
@@ -237,12 +252,12 @@ sda      8:0    0 238.5G  0 disk
 ========================================
 KERNEL VERSION
 ========================================
-6.8.0-85-generic
+5.15.0-160-generic
 
 ========================================
 CURRENT KERNEL CMDLINE
 ========================================
-BOOT_IMAGE=/vmlinuz-6.8.0-85-generic root=UUID=71585093-3411-406f-9bcf-dbbec33a3b2c ro
+BOOT_IMAGE=/vmlinuz-5.15.0-160-generic root=UUID=15710536-1c09-44b9-9dfc-74fda630d8e8 ro
 
 ========================================
 GRUB CONFIGURATION
@@ -255,23 +270,16 @@ GRUB CONFIGURATION
 GRUB_DEFAULT=0
 GRUB_TIMEOUT_STYLE=hidden
 GRUB_TIMEOUT=0
-GRUB_DISTRIBUTOR=`( . /etc/os-release; echo ${NAME:-Ubuntu} ) 2>/dev/null || echo Ubuntu`
+GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
 GRUB_CMDLINE_LINUX_DEFAULT=""
 GRUB_CMDLINE_LINUX=""
-
-# If your computer has multiple operating systems installed, then you
-# probably want to run os-prober. However, if your computer is a host
-# for guest OSes installed via LVM or raw disk devices, running
-# os-prober can cause damage to those guest OSes as it mounts
-# filesystems to look for things.
-#GRUB_DISABLE_OS_PROBER=false
 
 # Uncomment to enable BadRAM filtering, modify to suit your needs
 # This works with Linux (no patch required) and with any kernel that obtains
 # the memory map information from GRUB (GNU Mach, kernel of FreeBSD ...)
 #GRUB_BADRAM="0x01234567,0xfefefefe,0x89abcdef,0xefefefef"
 
-# Uncomment to disable graphical terminal
+# Uncomment to disable graphical terminal (grub-pc only)
 #GRUB_TERMINAL=console
 
 # The resolution used on graphical terminal
@@ -291,11 +299,11 @@ GRUB_CMDLINE_LINUX=""
 ========================================
 INSTALLED KERNEL PACKAGES
 ========================================
-ii  linux-headers-6.8.0-85               6.8.0-85.85                             all          Header files related to Linux kernel version 6.8.0
-ii  linux-headers-6.8.0-85-generic       6.8.0-85.85                             amd64        Linux kernel headers for version 6.8.0 on 64 bit x86 SMP
-ii  linux-headers-generic                6.8.0-85.85                             amd64        Generic Linux kernel headers
-ii  linux-image-6.8.0-85-generic         6.8.0-85.85                             amd64        Signed kernel image generic
-ii  linux-image-generic                  6.8.0-85.85                             amd64        Generic Linux kernel image
+ii  linux-headers-5.15.0-160               5.15.0-160.170                          all          Header files related to Linux kernel version 5.15.0
+ii  linux-headers-5.15.0-160-generic       5.15.0-160.170                          amd64        Linux kernel headers for version 5.15.0 on 64 bit x86 SMP
+ii  linux-headers-generic                  5.15.0.160.156                          amd64        Generic Linux kernel headers
+ii  linux-image-5.15.0-160-generic         5.15.0-160.170                          amd64        Signed kernel image generic
+ii  linux-image-generic                    5.15.0.160.156                          amd64        Generic Linux kernel image
 
 ========================================
 SYSTEMD SERVICES STATUS
@@ -303,14 +311,17 @@ SYSTEMD SERVICES STATUS
   UNIT                        LOAD   ACTIVE SUB     DESCRIPTION
   cron.service                loaded active running Regular background program processing daemon
   dbus.service                loaded active running D-Bus System Message Bus
-  fwupd.service               loaded active running Firmware update daemon
   getty@tty1.service          loaded active running Getty on tty1
+  irqbalance.service          loaded active running irqbalance daemon
   ModemManager.service        loaded active running Modem Manager
   multipathd.service          loaded active running Device-Mapper Multipath Device Controller
   named.service               loaded active running BIND Domain Name Server
+  networkd-dispatcher.service loaded active running Dispatcher daemon for systemd-networkd
   openntpd.service            loaded active running OpenNTPd Network Time Protocol
+  packagekit.service          loaded active running PackageKit Daemon
   polkit.service              loaded active running Authorization Manager
   rsyslog.service             loaded active running System Logging Service
+  snapd.service               loaded active running Snap Daemon
   ssh.service                 loaded active running OpenBSD Secure Shell server
   systemd-journald.service    loaded active running Journal Service
   systemd-logind.service      loaded active running User Login Management
@@ -322,9 +333,8 @@ SYSTEMD SERVICES STATUS
   upower.service              loaded active running Daemon for power management
   user@1000.service           loaded active running User Manager for UID 1000
 
-Legend: LOAD   → Reflects whether the unit definition was properly loaded.
-        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.
-        SUB    → The low-level unit activation state, values depend on unit type.
-
-20 loaded units listed.
+LOAD   = Reflects whether the unit definition was properly loaded.
+ACTIVE = The high-level unit activation state, i.e. generalization of SUB.
+SUB    = The low-level unit activation state, values depend on unit type.
+23 loaded units listed.
 

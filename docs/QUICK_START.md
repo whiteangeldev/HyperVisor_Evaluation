@@ -126,7 +126,7 @@ The script will guide you through:
 # Phase 1: Prerequisites
 ./01_collect_system_info.sh
 ./02_check_virt_support.sh
-./18_pre_acrn_check.sh
+./21_pre_acrn_check.sh
 
 # Phase 2: GRUB Config (if not done)
 ./03_backup_current_config.sh
@@ -135,15 +135,15 @@ sudo ./05_update_grub.sh
 sudo reboot  # REBOOT REQUIRED
 
 # Phase 3: ACRN Dependencies (after reboot if needed)
-sudo ./19_install_acrn_deps.sh  # ~5-10 minutes
+sudo ./25_install_acrn_deps.sh  # ~5-10 minutes
 
 # Phase 4: Download and Build
-./20_download_acrn.sh           # ~2-5 minutes
-./21_build_acrn.sh              # ~15-30 minutes
+./23_download_acrn.sh           # ~2-5 minutes
+./24_build_acrn.sh              # ~15-30 minutes
 
 # Phase 5: Install and Configure
-sudo ./22_install_acrn.sh
-./23_configure_acrn.sh
+sudo ./25_install_acrn.sh
+./26_configure_acrn.sh
 
 # Review GRUB entry before rebooting!
 sudo cat /etc/grub.d/40_custom_acrn
@@ -153,7 +153,7 @@ sudo update-grub
 sudo reboot  # REBOOT REQUIRED (select ACRN from GRUB)
 
 # Phase 6: Validation (after ACRN boot)
-./24_verify_acrn.sh
+./27_verify_acrn.sh
 ./14_verify_isolation.sh
 ./15_verify_iommu.sh
 ./27_final_report.sh

@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# Script: 15_verify_iommu.sh
+# Script: 18_verify_iommu.sh
 # Purpose: Verify IOMMU groups and enumerate devices for passthrough
-# Usage: ./15_verify_iommu.sh
+# Usage: ./18_verify_iommu.sh
 #
 
 set -e

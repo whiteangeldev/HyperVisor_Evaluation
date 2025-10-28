@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# Script: 11_generate_irq_script.sh
+# Script: 14_generate_irq_script.sh
 # Purpose: Generate script to set IRQ affinity to housekeeping CPUs
-# Usage: ./11_generate_irq_script.sh
+# Usage: ./14_generate_irq_script.sh
 #
 
 set -e

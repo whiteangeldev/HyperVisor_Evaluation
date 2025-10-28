@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# Script: 17_verify_irq_affinity.sh
+# Script: 20_verify_irq_affinity.sh
 # Purpose: Verify IRQ affinity configuration
-# Usage: ./17_verify_irq_affinity.sh
+# Usage: ./20_verify_irq_affinity.sh
 #
 
 set -e

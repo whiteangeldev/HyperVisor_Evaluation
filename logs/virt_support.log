@@ -1,7 +1,7 @@
 ========================================
 VIRTUALIZATION SUPPORT CHECK
 ========================================
-Check Date: 2025-10-17 13:07:56
+Check Date: 2025-10-25 07:05:51
 
 ========================================
 CPU VIRTUALIZATION FEATURES
@@ -27,9 +27,8 @@ IOMMU KERNEL STATUS
 KERNEL MODULES
 ========================================
 KVM modules:
-kvm_intel             487424  0
-kvm                  1409024  1 kvm_intel
-irqbypass              12288  1 kvm
+kvm_intel             372736  0
+kvm                  1040384  1 kvm_intel
 
 VFIO modules:
   No VFIO modules loaded
@@ -37,8 +36,8 @@ VFIO modules:
 ========================================
 DMESG IOMMU MESSAGES (requires sudo)
 ========================================
-  (Skipped - requires root privileges)
-  Run: sudo dmesg | grep -i iommu
+[    0.408194] iommu: Default domain type: Translated 
+[    0.408194] iommu: DMA domain TLB invalidation policy: lazy mode 
 
 ========================================
 SUMMARY

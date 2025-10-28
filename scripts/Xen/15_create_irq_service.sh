@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# Script: 12_create_irq_service.sh
+# Script: 15_create_irq_service.sh
 # Purpose: Generate systemd service for persistent IRQ affinity
-# Usage: ./12_create_irq_service.sh
+# Usage: ./15_create_irq_service.sh
 #
 
 set -e

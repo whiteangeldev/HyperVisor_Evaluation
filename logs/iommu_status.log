@@ -1,12 +1,12 @@
 ========================================
 IOMMU STATUS CHECK
 ========================================
-Check Date: 2025-10-17 13:20:28
+Check Date: 2025-10-25 07:11:53
 
 ========================================
 CURRENT KERNEL CMDLINE
 ========================================
-BOOT_IMAGE=/vmlinuz-6.8.0-85-generic root=UUID=71585093-3411-406f-9bcf-dbbec33a3b2c ro intel_iommu=on iommu=pt isolcpus=4-7 nohz_full=4-7 rcu_nocbs=4-7 nosoftlockup nohz=on rcu_nocb_poll idle=poll processor.max_cstate=1 intel_idle.max_cstate=0 intel_pstate=disable tsc=reliable clocksource=tsc
+BOOT_IMAGE=/vmlinuz-5.15.0-160-generic root=UUID=15710536-1c09-44b9-9dfc-74fda630d8e8 ro intel_iommu=on iommu=pt isolcpus=4-7 nohz_full=4-7 rcu_nocbs=4-7 nosoftlockup nohz=on rcu_nocb_poll idle=poll processor.max_cstate=1 intel_idle.max_cstate=0 intel_pstate=disable tsc=reliable clocksource=tsc
 
 ========================================
 IOMMU PARAMETERS CHECK
@@ -29,10 +29,10 @@ IOMMU GROUPS
 ========================================
 DMESG IOMMU MESSAGES
 ========================================
-[    0.000000] Command line: BOOT_IMAGE=/vmlinuz-6.8.0-85-generic root=UUID=71585093-3411-406f-9bcf-dbbec33a3b2c ro intel_iommu=on iommu=pt isolcpus=4-7 nohz_full=4-7 rcu_nocbs=4-7 nosoftlockup nohz=on rcu_nocb_poll idle=poll processor.max_cstate=1 intel_idle.max_cstate=0 intel_pstate=disable tsc=reliable clocksource=tsc
-[    0.081658] Kernel command line: BOOT_IMAGE=/vmlinuz-6.8.0-85-generic root=UUID=71585093-3411-406f-9bcf-dbbec33a3b2c ro intel_iommu=on iommu=pt isolcpus=4-7 nohz_full=4-7 rcu_nocbs=4-7 nosoftlockup nohz=on rcu_nocb_poll idle=poll processor.max_cstate=1 intel_idle.max_cstate=0 intel_pstate=disable tsc=reliable clocksource=tsc
-[    0.081765] DMAR: IOMMU enabled
-[    0.416478] iommu: Default domain type: Passthrough (set via kernel command line)
+[    0.000000] Command line: BOOT_IMAGE=/vmlinuz-5.15.0-160-generic root=UUID=15710536-1c09-44b9-9dfc-74fda630d8e8 ro intel_iommu=on iommu=pt isolcpus=4-7 nohz_full=4-7 rcu_nocbs=4-7 nosoftlockup nohz=on rcu_nocb_poll idle=poll processor.max_cstate=1 intel_idle.max_cstate=0 intel_pstate=disable tsc=reliable clocksource=tsc
+[    0.081724] Kernel command line: BOOT_IMAGE=/vmlinuz-5.15.0-160-generic root=UUID=15710536-1c09-44b9-9dfc-74fda630d8e8 ro intel_iommu=on iommu=pt isolcpus=4-7 nohz_full=4-7 rcu_nocbs=4-7 nosoftlockup nohz=on rcu_nocb_poll idle=poll processor.max_cstate=1 intel_idle.max_cstate=0 intel_pstate=disable tsc=reliable clocksource=tsc
+[    0.081820] DMAR: IOMMU enabled
+[    0.411925] iommu: Default domain type: Passthrough (set via kernel command line)
 
 ========================================
 CPU ISOLATION VERIFICATION

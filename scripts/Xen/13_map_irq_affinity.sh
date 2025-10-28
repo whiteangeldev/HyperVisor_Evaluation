@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# Script: 10_map_irq_affinity.sh
+# Script: 13_map_irq_affinity.sh
 # Purpose: Document current IRQ affinity mappings
-# Usage: ./10_map_irq_affinity.sh
+# Usage: ./13_map_irq_affinity.sh
 #
 
 set -e

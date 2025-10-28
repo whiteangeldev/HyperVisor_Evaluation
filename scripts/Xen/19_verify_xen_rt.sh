@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# Script: 16_verify_xen_rt.sh
+# Script: 19_verify_xen_rt.sh
 # Purpose: Verify Xen RT scheduler configuration
-# Usage: ./16_verify_xen_rt.sh
+# Usage: ./19_verify_xen_rt.sh
 #
 
 set -e

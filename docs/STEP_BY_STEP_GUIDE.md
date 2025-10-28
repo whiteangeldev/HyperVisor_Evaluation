@@ -119,7 +119,7 @@ sudo ./scripts/07_install_xen.sh
 **Parameters**:
 - `sched=rtds` (Real-Time Deferrable Server)
 - CPU pinning for dom0
-- Reserve CPUs 2-7 for RT guests
+- Reserve CPUs 4-7 for RT guests
 
 **Validation**: Config file created.
 
@@ -141,25 +141,88 @@ sudo reboot
 
 ---
 
-## PHASE 1.4: IRQ Affinity Configuration
+## PHASE 1.4: Build Xen with RTDS Scheduler (For Real-Time Support)
 
-### Step 1.4.1: Map Current IRQ Affinity
+**Note**: Ubuntu's packaged Xen doesn't include the RTDS scheduler. To enable true hard real-time performance (<10μs latency), you must build Xen from source.
+
+### Step 1.4.1: Install Build Dependencies
+**⚠️ REQUIRES SUDO:**
 ```bash
-./scripts/10_map_irq_affinity.sh
+sudo ./scripts/10_install_xen_build_deps.sh
+```
+**Purpose**: Install all dependencies needed to build Xen from source.  
+**Time**: ~5 minutes  
+**Validation**: No errors, packages installed successfully.
+
+### Step 1.4.2: Build Xen from Source
+**⚠️ REQUIRES SUDO - Takes 20-40 minutes:**
+```bash
+sudo ./scripts/12_build_xen_minimal.sh
+```
+**Purpose**: Download, compile, and install Xen 4.17.4 with RTDS scheduler.  
+**Time**: 20-40 minutes  
+**Disk Space**: ~3GB  
+**Actions**:
+- Downloads Xen 4.17.4 source
+- Configures with RTDS enabled
+- Compiles hypervisor and tools
+- Backs up current Xen installation
+- Installs new Xen
+- Updates GRUB
+
+**Validation**: Build completes without errors, `/boot/xen.gz` updated.
+
+### Step 1.4.3: Clean Up Failed Build (If Needed)
+**⚠️ Only if build fails:**
+```bash
+sudo ./scripts/11_cleanup_failed_build.sh
+```
+**Purpose**: Remove failed build directory to start fresh.  
+**Validation**: Build directory cleaned, ready to retry.
+
+### Step 1.4.4: Reboot into New Xen
+**⚠️ REQUIRES REBOOT:**
+```bash
+sudo reboot
+```
+**Purpose**: Boot into newly built Xen with RTDS.  
+**Validation**: After reboot, verify version:
+```bash
+sudo xl info | grep xen_version
+# Should show: 4.17.4
+```
+
+### Step 1.4.5: Verify RTDS Scheduler
+```bash
+# Test creating RTDS CPU pool
+sudo xl cpupool-create name="test" sched="rtds"
+sudo xl cpupool-list
+sudo xl cpupool-destroy test
+```
+**Purpose**: Confirm RTDS scheduler is available.  
+**Validation**: CPU pool creation succeeds, RTDS scheduler visible in list.
+
+---
+
+## PHASE 1.5: IRQ Affinity Configuration
+
+### Step 1.5.1: Map Current IRQ Affinity
+```bash
+./scripts/13_map_irq_affinity.sh
 ```
 **Purpose**: Document baseline IRQ distribution.  
 **Output**: `logs/irq_affinity_before.log`  
 **Validation**: Log shows IRQ numbers and CPU affinities.
 
-### Step 1.4.2: Generate IRQ Affinity Script
+### Step 1.5.2: Generate IRQ Affinity Script
 ```bash
-./scripts/11_generate_irq_script.sh
+./scripts/14_generate_irq_script.sh
 ```
-**Purpose**: Create script to pin IRQs to CPUs 0-1 (non-isolated).  
+**Purpose**: Create script to pin IRQs to CPUs 0-3 (housekeeping CPUs).  
 **Output**: `scripts/set_irq_affinity.sh`  
 **Validation**: Script generated with IRQ pinning commands.
 
-### Step 1.4.3: Disable irqbalance (Manual)
+### Step 1.5.3: Disable irqbalance (Manual)
 **⚠️ REQUIRES SUDO - Run manually:**
 ```bash
 sudo systemctl stop irqbalance
@@ -168,76 +231,73 @@ sudo systemctl disable irqbalance
 **Purpose**: Prevent automatic IRQ rebalancing.  
 **Validation**: `systemctl status irqbalance` shows disabled.
 
-### Step 1.4.4: Apply IRQ Affinity (Manual)
+### Step 1.5.4: Apply IRQ Affinity (Manual)
 **⚠️ REQUIRES SUDO - Run manually:**
 ```bash
 sudo ./scripts/set_irq_affinity.sh
 ```
-**Purpose**: Pin all IRQs to CPUs 0-1.  
+**Purpose**: Pin all IRQs to housekeeping CPUs (0-3).  
 **Validation**: Check `/proc/irq/*/smp_affinity_list` for each IRQ.
 
-### Step 1.4.5: Make IRQ Affinity Persistent
+### Step 1.5.5: Make IRQ Affinity Persistent
 ```bash
-./scripts/12_create_irq_service.sh
+./scripts/15_create_irq_service.sh
 ```
 **Purpose**: Generate systemd service to apply IRQ affinity on boot.  
 **Output**: `configs/irq-affinity.service`  
 **Validation**: Service file created.
 
-### Step 1.4.6: Install Systemd Service (Manual)
+### Step 1.5.6: Install Systemd Service (Manual)
 **⚠️ REQUIRES SUDO - Run manually:**
 ```bash
-sudo ./scripts/13_install_irq_service.sh
+sudo ./scripts/16_install_irq_service.sh
 ```
 **Purpose**: Enable IRQ affinity service.  
 **Validation**: Service enabled, will run on boot.
 
 ---
 
-## PHASE 1.5: Validation and Testing
+## PHASE 1.6: Validation and Testing
 
-### Step 1.5.1: Verify CPU Isolation
+### Step 1.6.1: Verify CPU Isolation
 ```bash
-./scripts/14_verify_isolation.sh
+./scripts/17_verify_isolation.sh
 ```
-**Purpose**: Confirm CPUs 2-7 are isolated.  
+**Purpose**: Confirm CPUs 4-7 are isolated.  
 **Output**: `logs/cpu_isolation.log`  
 **Validation**: 
 - `/proc/cmdline` shows isolation parameters
-- CPUs 2-7 have minimal task activity
-- `cat /sys/devices/system/cpu/isolated` shows 2-7
+- CPUs 4-7 have minimal task activity
+- `cat /sys/devices/system/cpu/isolated` shows 4-7
 
-### Step 1.5.2: Verify IOMMU Groups
+### Step 1.6.2: Verify IOMMU Groups
 ```bash
-./scripts/15_verify_iommu.sh
+./scripts/18_verify_iommu.sh
 ```
 **Purpose**: List IOMMU groups for device passthrough.  
 **Output**: `logs/iommu_groups.log`  
 **Validation**: Intel I354 NICs in separate IOMMU groups.
 
-### Step 1.5.3: Verify Xen Status
+### Step 1.6.3: Verify Xen RT Scheduler
 ```bash
-./scripts/16_verify_xen.sh
+./scripts/19_verify_xen_rt.sh
 ```
-**Purpose**: Confirm Xen hypervisor is operational.  
-**Output**: `logs/xen_status.log`  
+**Purpose**: Confirm Xen hypervisor with RTDS is operational.  
+**Output**: `logs/xen_rt_verification.log`  
 **Validation**: 
-- `xl info` shows hypervisor version and resources
-- RT scheduler (rtds) is active
+- `xl info` shows hypervisor version 4.17.4
+- RTDS scheduler is available
+- Can create RTDS CPU pools
 
-### Step 1.5.4: Generate System Report
+### Step 1.6.4: Verify IRQ Affinity
 ```bash
-./scripts/17_generate_report.sh
+./scripts/20_verify_irq_affinity.sh
 ```
-**Purpose**: Create comprehensive report of Milestone 1.  
-**Output**: `docs/milestone1_report.md`  
-**Contents**:
-- System configuration
-- GRUB parameters
-- IOMMU status
-- CPU isolation verification
-- IRQ affinity maps
-- Xen configuration
+**Purpose**: Confirm IRQs are pinned correctly.  
+**Output**: `logs/irq_affinity_verification.log`  
+**Validation**: 
+- IRQs pinned to housekeeping CPUs (0-3)
+- Isolated CPUs (4-7) have no IRQ assignments
 
 ---
 
@@ -267,12 +327,13 @@ sudo ./scripts/13_install_irq_service.sh
 
 ✅ **Milestone 1 Complete When**:
 1. System boots with IOMMU enabled
-2. CPUs 2-7 are isolated (verified in logs)
-3. Xen hypervisor operational with RT scheduler
-4. IRQs pinned to CPUs 0-1
+2. CPUs 4-7 are isolated (verified in logs)
+3. Xen 4.17.4 hypervisor operational with RTDS scheduler built and available
+4. IRQs pinned to housekeeping CPUs (0-3)
 5. IOMMU groups enumerated
-6. All scripts and configs documented
-7. Report generated with evidence
+6. RTDS CPU pools can be created successfully
+7. All verification scripts pass
+8. System ready for RT VM deployment
 
 ---
 

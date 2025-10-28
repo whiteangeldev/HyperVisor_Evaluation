@@ -1,6 +1,6 @@
 # GRUB Kernel Parameters for RT Hypervisor POC
-# Generated: 2025-10-17 13:13:51
-# System: AMS764973
+# Generated: 2025-10-25 07:06:02
+# System: AMS765477
 # Total CPUs: 8
 # Housekeeping CPUs: 0,1,2,3
 # Isolated CPUs: 4-7

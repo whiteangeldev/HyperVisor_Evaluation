@@ -151,7 +151,7 @@ You can evaluate both later, but focus on one for initial setup.
 - [ ] Run: `./scripts/02_check_virt_support.sh`
   - [ ] VMX flag present: ✓
   
-- [ ] Run: `./scripts/18_pre_acrn_check.sh`
+- [ ] Run: `./scripts/21_pre_acrn_check.sh`
   - [ ] Log created: `logs/acrn_pre_check.log`
   - [ ] Score: _____% (70%+ to proceed)
 
@@ -167,21 +167,21 @@ If GRUB not configured (check `/proc/cmdline`):
 
 ### Phase 3: Dependencies (~10 minutes)
 
-- [ ] Run: `sudo ./scripts/19_install_acrn_deps.sh`
+- [ ] Run: `sudo ./scripts/25_install_acrn_deps.sh`
   - [ ] Log created: `logs/acrn_deps_install.log`
   - [ ] Build tools installed: ✓
   - [ ] Python dependencies installed: ✓
 
 ### Phase 4: Download ACRN (~5 minutes)
 
-- [ ] Run: `./scripts/20_download_acrn.sh`
+- [ ] Run: `./scripts/23_download_acrn.sh`
   - [ ] Log created: `logs/acrn_download.log`
   - [ ] Repository cloned: `acrn-hypervisor/`
   - [ ] Version checked out: v3.2 or later
 
 ### Phase 5: Build ACRN (~15-30 minutes)
 
-- [ ] Run: `./scripts/21_build_acrn.sh`
+- [ ] Run: `./scripts/24_build_acrn.sh`
   - [ ] Log created: `logs/acrn_build.log`
   - [ ] Hypervisor built: `acrn-hypervisor/build/hypervisor/acrn.bin`
   - [ ] Device model built: `acrn-hypervisor/build/devicemodel/acrn-dm`
@@ -189,7 +189,7 @@ If GRUB not configured (check `/proc/cmdline`):
 
 ### Phase 6: Install ACRN (Requires Reboot)
 
-- [ ] Run: `sudo ./scripts/22_install_acrn.sh`
+- [ ] Run: `sudo ./scripts/25_install_acrn.sh`
   - [ ] Log created: `logs/acrn_install.log`
   - [ ] Hypervisor copied to `/boot/acrn.bin`: ✓
   - [ ] Tools installed to `/usr/bin/`: ✓
@@ -201,7 +201,7 @@ If GRUB not configured (check `/proc/cmdline`):
   - [ ] Verify kernel path: `/boot/vmlinuz`
   - [ ] Edit if needed: `sudo nano /etc/grub.d/40_custom_acrn`
   
-- [ ] Run: `./scripts/23_configure_acrn.sh`
+- [ ] Run: `./scripts/26_configure_acrn.sh`
   - [ ] Config created: `configs/acrn_rt.conf`
   - [ ] CPU allocation reviewed: ✓
   
@@ -216,7 +216,7 @@ If GRUB not configured (check `/proc/cmdline`):
 - [ ] Verify ACRN booted: `ls -la /dev/acrn*`
   - [ ] Device nodes present: ✓
   
-- [ ] Run: `./scripts/24_verify_acrn.sh`
+- [ ] Run: `./scripts/27_verify_acrn.sh`
   - [ ] Log created: `logs/acrn_status.log`
   - [ ] ACRN running: ✓
   - [ ] Tools available: ✓
@@ -298,9 +298,9 @@ Instead of manual steps, run:
 - Check dmesg: `dmesg | grep -i iommu`
 
 ### Build Failures (ACRN)
-- Re-run: `sudo ./scripts/19_install_acrn_deps.sh`
+- Re-run: `sudo ./scripts/25_install_acrn_deps.sh`
 - Clean build: `cd acrn-hypervisor && make clean`
-- Rebuild: `./scripts/21_build_acrn.sh`
+- Rebuild: `./scripts/24_build_acrn.sh`
 
 ---
 

@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# Script: 13_install_irq_service.sh
+# Script: 16_install_irq_service.sh
 # Purpose: Install and enable IRQ affinity systemd service
-# Usage: sudo ./13_install_irq_service.sh
+# Usage: sudo ./16_install_irq_service.sh
 # ⚠️  REQUIRES ROOT PRIVILEGES
 #
 

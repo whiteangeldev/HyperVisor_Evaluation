@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# Script: 14_verify_isolation.sh
+# Script: 17_verify_isolation.sh
 # Purpose: Verify CPU isolation is properly configured
-# Usage: ./14_verify_isolation.sh
+# Usage: ./17_verify_isolation.sh
 #
 
 set -e

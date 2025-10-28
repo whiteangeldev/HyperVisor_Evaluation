@@ -77,7 +77,7 @@ CPU 4-7:  GPOS User OS - General purpose / stress
 cd ~/rt-hypervisor-poc
 
 # Run pre-installation check
-./scripts/18_pre_acrn_check.sh
+./scripts/21_pre_acrn_check.sh
 ```
 
 This script verifies:
@@ -126,7 +126,7 @@ You should see:
 
 ```bash
 # Install all required packages (requires root)
-sudo ./scripts/19_install_acrn_deps.sh
+sudo ./scripts/25_install_acrn_deps.sh
 ```
 
 This installs:
@@ -143,7 +143,7 @@ This installs:
 
 ```bash
 # Download ACRN v3.2 (stable release)
-./scripts/20_download_acrn.sh
+./scripts/23_download_acrn.sh
 ```
 
 This clones the ACRN repository to `~/rt-hypervisor-poc/acrn-hypervisor/`
@@ -156,7 +156,7 @@ This clones the ACRN repository to `~/rt-hypervisor-poc/acrn-hypervisor/`
 
 ```bash
 # Build hypervisor, device model, and tools
-./scripts/21_build_acrn.sh
+./scripts/24_build_acrn.sh
 ```
 
 This compiles:
@@ -177,7 +177,7 @@ This compiles:
 
 ```bash
 # Install ACRN to system (requires root)
-sudo ./scripts/22_install_acrn.sh
+sudo ./scripts/25_install_acrn.sh
 ```
 
 This script:
@@ -207,7 +207,7 @@ Ensure the entry has correct:
 
 ```bash
 # Generate ACRN RT configuration
-./scripts/23_configure_acrn.sh
+./scripts/26_configure_acrn.sh
 ```
 
 This creates `configs/acrn_rt.conf` with:
@@ -248,7 +248,7 @@ After booting into ACRN:
 
 ```bash
 # Verify ACRN is running
-./scripts/24_verify_acrn.sh
+./scripts/27_verify_acrn.sh
 ```
 
 Check for:
@@ -361,7 +361,7 @@ acrn-dm \
 **Solutions**:
 1. Ensure all dependencies installed:
    ```bash
-   sudo ./scripts/19_install_acrn_deps.sh
+   sudo ./scripts/25_install_acrn_deps.sh
    ```
 
 2. Clean and rebuild:
@@ -369,7 +369,7 @@ acrn-dm \
    cd ~/rt-hypervisor-poc/acrn-hypervisor
    make clean
    cd ~/rt-hypervisor-poc
-   ./scripts/21_build_acrn.sh
+   ./scripts/24_build_acrn.sh
    ```
 
 3. Check specific error messages in `logs/acrn_build.log`
@@ -468,7 +468,7 @@ After completing ACRN setup:
 
 1. **Verify Installation**
    ```bash
-   ./scripts/24_verify_acrn.sh
+   ./scripts/27_verify_acrn.sh
    ./scripts/14_verify_isolation.sh
    ./scripts/15_verify_iommu.sh
    ```

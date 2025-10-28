@@ -1,0 +1,1 @@
+BOOT_IMAGE=/vmlinuz-5.15.0-160-generic root=UUID=15710536-1c09-44b9-9dfc-74fda630d8e8 ro
