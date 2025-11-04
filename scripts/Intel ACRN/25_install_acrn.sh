@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# Script: 22_install_acrn.sh
+# Script: 25_install_acrn.sh
 # Purpose: Install Intel ACRN hypervisor to system
-# Usage: sudo ./22_install_acrn.sh
+# Usage: sudo ./25_install_acrn.sh
 # ⚠️  REQUIRES ROOT PRIVILEGES
 #
 
@@ -122,7 +122,7 @@ menuentry 'ACRN Hypervisor' --class ubuntu --class gnu-linux --class gnu --class
     multiboot2 /boot/acrn.bin
     
     echo 'Loading Service VM kernel...'
-    module2 /boot/vmlinuz root=UUID=REPLACEME rw console=tty0 console=ttyS0 no_timer_check quiet loglevel=3 
+    module2 /boot/vmlinuz root=UUID=REPLACEME ro intel_iommu=on 
     
     echo 'Loading Service VM initrd...'
     module2 /boot/initrd.img
@@ -165,7 +165,7 @@ EOF
     echo "Edit /etc/grub.d/40_custom_acrn to ensure correct kernel paths"
     echo ""
     echo "Next steps:"
-    echo "1. Configure ACRN: ./scripts/23_configure_acrn.sh"
+    echo "1. Configure ACRN: ./scripts/26_configure_acrn.sh"
     echo "2. Review GRUB entry: sudo cat /etc/grub.d/40_custom_acrn"
     echo "3. Reboot and select 'ACRN Hypervisor' from GRUB menu"
     echo ""

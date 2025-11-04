@@ -1,33 +1,33 @@
 #!/bin/bash
 #
-# Script: 19_install_acrn_deps.sh
+# Script: 22_install_acrn_deps.sh
 # Purpose: Install dependencies for Intel ACRN
-# Usage: sudo ./19_install_acrn_deps.sh
+# Usage: sudo ./22_install_acrn_deps.sh
 # ⚠️  REQUIRES ROOT PRIVILEGES
 #
-
+ 
 set -e
-
+ 
 # Check if running as root
 if [ "$EUID" -ne 0 ]; then
     echo "❌ ERROR: This script must be run as root"
     echo "Usage: sudo $0"
     exit 1
 fi
-
+ 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 LOG_DIR="$PROJECT_ROOT/logs"
 INSTALL_LOG="$LOG_DIR/acrn_deps_install.log"
-
+ 
 mkdir -p "$LOG_DIR"
-
+ 
 echo "========================================"
 echo "Intel ACRN Dependencies Installation"
 echo "========================================"
 echo "Timestamp: $(date '+%Y-%m-%d %H:%M:%S')"
 echo ""
-
+ 
 {
     echo "========================================"
     echo "ACRN DEPENDENCIES INSTALLATION LOG"
@@ -48,6 +48,7 @@ echo ""
         make \
         gcc \
         g++ \
+        pkg-config \
         libssl-dev \
         libpciaccess-dev \
         uuid-dev \
@@ -56,6 +57,12 @@ echo ""
         libxml2-dev \
         libxml2-utils \
         libusb-1.0-0-dev \
+        libext2fs-dev \
+        libnuma-dev \
+        libblkid-dev \
+        libsdl2-dev \
+        libpixman-1-dev \
+        libcjson-dev \
         python3 \
         python3-pip \
         python3-setuptools \
@@ -77,7 +84,9 @@ echo ""
     echo ""
     
     echo "Step 3: Install Python dependencies..."
-    pip3 install lxml xmlschema --break-system-packages || pip3 install lxml xmlschema
+    # Note: ACRN 3.2 requires older elementpath version for compatibility
+    pip3 install --break-system-packages lxml tqdm defusedxml "elementpath==3.0.2" || \
+        pip3 install lxml tqdm defusedxml "elementpath==3.0.2"
     echo "✓ Python dependencies installed"
     echo ""
     
@@ -109,12 +118,11 @@ echo ""
     echo "✓ All ACRN dependencies installed successfully"
     echo ""
     echo "Next steps:"
-    echo "1. Download ACRN: ./scripts/20_download_acrn.sh"
-    echo "2. Build ACRN: ./scripts/21_build_acrn.sh"
+    echo "1. Download ACRN: ./scripts/23_download_acrn.sh"
+    echo "2. Build ACRN: ./scripts/24_build_acrn.sh"
     echo ""
     
 } 2>&1 | tee "$INSTALL_LOG"
-
+ 
 echo "✓ Installation log saved to: $INSTALL_LOG"
 echo ""
-

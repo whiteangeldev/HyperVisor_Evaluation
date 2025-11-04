@@ -100,7 +100,7 @@ echo ""
     echo ""
     echo "Next steps:"
     echo "1. Review ACRN documentation: cat $ACRN_DIR/README.rst"
-    echo "2. Build ACRN: ./scripts/21_build_acrn.sh"
+    echo "2. Build ACRN: ./scripts/24_build_acrn.sh"
     echo ""
     
 } 2>&1 | tee "$DOWNLOAD_LOG"

@@ -1,32 +1,32 @@
 #!/bin/bash
 #
-# Script: 21_build_acrn.sh
+# Script: 24_build_acrn.sh
 # Purpose: Build Intel ACRN hypervisor
-# Usage: ./21_build_acrn.sh
+# Usage: ./24_build_acrn.sh
 #
-
+ 
 set -e
-
+ 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 LOG_DIR="$PROJECT_ROOT/logs"
 BUILD_LOG="$LOG_DIR/acrn_build.log"
 ACRN_DIR="$PROJECT_ROOT/acrn-hypervisor"
-
+ 
 mkdir -p "$LOG_DIR"
-
+ 
 echo "========================================"
 echo "Build Intel ACRN Hypervisor"
 echo "========================================"
 echo "Timestamp: $(date '+%Y-%m-%d %H:%M:%S')"
 echo ""
-
+ 
 if [ ! -d "$ACRN_DIR" ]; then
     echo "❌ ERROR: ACRN source directory not found: $ACRN_DIR"
     echo "Run ./scripts/20_download_acrn.sh first"
     exit 1
 fi
-
+ 
 {
     echo "========================================"
     echo "ACRN BUILD LOG"
@@ -44,23 +44,36 @@ fi
     make clean || echo "No previous build to clean"
     echo ""
     
-    echo "Step 3: Configure build..."
-    # Use industry configuration as baseline
-    # Options: industry, hybrid, hybrid_rt
-    BOARD="generic"
-    SCENARIO="industry"
+    echo "Step 3: Detect ACRN version and configure build..."
     
-    echo "Board: $BOARD"
-    echo "Scenario: $SCENARIO"
-    echo ""
-    
-    # For modern ACRN, use the configurator
-    if [ -f "misc/config_tools/configurator/pyodide/Makefile" ]; then
-        echo "Detected ACRN 3.x+ with new build system"
-        echo "Using industry scenario for real-time workloads"
+    # Check if using ACRN 3.x (has config_tools but no legacy board configs)
+    if [ -d "misc/config_tools" ] && [ ! -d "hypervisor/arch/x86/configs/boards" ]; then
+        echo "✓ Detected ACRN 3.x with XML-based configuration system"
         echo ""
+        
+        # For ACRN 3.x, use generic_board with shared scenario
+        BOARD="generic_board"
+        SCENARIO="shared"
+        
+        echo "Available board configurations in misc/config_tools/data/:"
+        ls -d misc/config_tools/data/*/ 2>/dev/null | xargs -n1 basename || true
+        echo ""
+        
+        echo "Using configuration:"
+        echo "  Board: $BOARD (generic x86 board)"
+        echo "  Scenario: $SCENARIO (shared scenario for general purpose VMs)"
+        echo ""
+        echo "Note: You can also use 'hybrid' or 'partitioned' scenarios"
+        echo ""
+    else
+        echo "✓ Detected ACRN 2.x with legacy board configuration system"
+        BOARD="generic"
+        SCENARIO="industry"
+        echo "Board: $BOARD"
+        echo "Scenario: $SCENARIO"
     fi
     
+    echo ""
     echo "Step 4: Build hypervisor..."
     echo "This may take 10-30 minutes depending on system performance..."
     echo ""
@@ -70,8 +83,10 @@ fi
     JOBS=$((NPROC > 4 ? 4 : NPROC))
     
     echo "Building with $JOBS parallel jobs..."
+    echo "Command: make -j$JOBS hypervisor BOARD=$BOARD SCENARIO=$SCENARIO"
+    echo ""
     
-    # Standard ACRN build
+    # Build with BOARD and SCENARIO parameters (works for both 2.x and 3.x)
     make -j"$JOBS" hypervisor BOARD="$BOARD" SCENARIO="$SCENARIO"
     
     echo ""
@@ -116,12 +131,14 @@ fi
     echo "Build directory: $ACRN_DIR/build"
     echo ""
     echo "Next steps:"
-    echo "1. Install ACRN: sudo ./scripts/22_install_acrn.sh"
-    echo "2. Configure ACRN: ./scripts/23_configure_acrn.sh"
+    echo "1. Install ACRN: sudo ./scripts/25_install_acrn.sh"
+    echo "2. Configure ACRN: ./scripts/26_configure_acrn.sh"
     echo ""
     
 } 2>&1 | tee "$BUILD_LOG"
-
+ 
 echo "✓ Build log saved to: $BUILD_LOG"
 echo ""
-
+ 
+ 
+ 
