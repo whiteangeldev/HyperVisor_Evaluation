@@ -1,1 +1,0 @@
-BOOT_IMAGE=/vmlinuz-6.8.0-85-generic root=UUID=71585093-3411-406f-9bcf-dbbec33a3b2c ro
