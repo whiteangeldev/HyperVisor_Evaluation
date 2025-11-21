@@ -26,7 +26,7 @@ echo ""
 
 # Check if ACRN source exists
 if [ ! -d "$ACRN_DIR" ]; then
-    echo "❌ ACRN source not found. Run 04_download_acrn_3.4.sh first"
+    echo "❌ ACRN source not found. Run 04_download_acrn_3.3.sh first"
     exit 1
 fi
 

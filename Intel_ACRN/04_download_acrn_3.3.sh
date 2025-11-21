@@ -1,14 +1,14 @@
 #!/bin/bash
 #
-# Script: 04_download_acrn_3.4.sh
-# Purpose: Download Intel ACRN 3.4 source code
-# Usage: ./04_download_acrn_3.4.sh
+# Script: 04_download_acrn_3.3.sh
+# Purpose: Download Intel ACRN 3.3 source code
+# Usage: ./04_download_acrn_3.3.sh
 
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
-ACRN_VERSION="3.4"
+ACRN_VERSION="3.3"
 ACRN_DIR="$PROJECT_ROOT/acrn-hypervisor"
 ACRN_URL="https://github.com/projectacrn/acrn-hypervisor.git"
 

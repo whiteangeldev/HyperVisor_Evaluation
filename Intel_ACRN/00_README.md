@@ -15,7 +15,7 @@ sudo ./03_check_kernel_rt.sh        # Check kernel RT support (optional)
 #### Phase 2: Download and Build
 
 ```bash
-sudo ./04_download_acrn_3.4.sh     # Download ACRN source code
+sudo ./04_download_acrn_3.3.sh     # Download ACRN source code
 sudo ./05_install_build_deps.sh     # Install build dependencies
 sudo ./06_build_acrn.sh             # Build ACRN hypervisor
 ```
@@ -126,7 +126,7 @@ sudo reboot
 | 01  | `check_bios_iommu.sh`        | Verify BIOS/IOMMU support           |
 | 02  | `check_cpu_info.sh`          | Display CPU information             |
 | 03  | `check_kernel_rt.sh`         | Check PREEMPT_RT kernel (optional)  |
-| 04  | `download_acrn_3.4.sh`       | Download ACRN 3.4 source            |
+| 04  | `download_acrn_3.3.sh`       | Download ACRN 3.3 source            |
 | 05  | `install_build_deps.sh`      | Install build dependencies          |
 | 06  | `build_acrn.sh`              | Build ACRN hypervisor               |
 | 07  | `install_acrn_binary.sh`     | Install binary to /boot             |

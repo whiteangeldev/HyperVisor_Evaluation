@@ -2,7 +2,7 @@
 
 ## Problem
 
-ACRN 3.4 has a dependency conflict:
+ACRN 3.3 has a dependency conflict:
 - **ACRN requires**: `elementpath >= 2.5.0, < 3.0.0` (uses `TypedElement` class)
 - **xmlschema >= 2.0.0 requires**: `elementpath >= 4.0.0` (no `TypedElement` class)
 - **Python 3.12 requires**: `xmlschema >= 2.0.0` for compatibility

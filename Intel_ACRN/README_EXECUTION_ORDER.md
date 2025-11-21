@@ -10,7 +10,7 @@
 
 ### Phase 2: Download and Build
 
-4. **04_download_acrn_3.4.sh** - Download ACRN source code
+4. **04_download_acrn_3.3.sh** - Download ACRN source code
 5. **05_install_build_deps.sh** - Install build dependencies
 6. **06_build_acrn.sh** - Build ACRN hypervisor
 
@@ -54,7 +54,7 @@
 sudo ./01_check_bios_iommu.sh
 sudo ./02_check_cpu_info.sh
 sudo ./03_check_kernel_rt.sh
-sudo ./04_download_acrn_3.4.sh
+sudo ./04_download_acrn_3.3.sh
 sudo ./05_install_build_deps.sh
 sudo ./06_build_acrn.sh
 sudo ./07_install_acrn_binary.sh

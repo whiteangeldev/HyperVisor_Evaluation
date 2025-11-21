@@ -6,7 +6,7 @@ MAIN INSTALLATION WORKFLOW (01-13)
 01_check_bios_iommu.sh              - Check BIOS/IOMMU support
 02_check_cpu_info.sh                - Check CPU information
 03_check_kernel_rt.sh                - Check kernel RT support (optional)
-04_download_acrn_3.4.sh              - Download ACRN source code
+04_download_acrn_3.3.sh              - Download ACRN source code
 05_install_build_deps.sh              - Install build dependencies
 06_build_acrn.sh                     - Build ACRN hypervisor
 07_install_acrn_binary.sh            - Install ACRN binary to /boot
@@ -33,7 +33,7 @@ Standard Installation:
   sudo ./01_check_bios_iommu.sh
   sudo ./02_check_cpu_info.sh
   sudo ./03_check_kernel_rt.sh
-  sudo ./04_download_acrn_3.4.sh
+  sudo ./04_download_acrn_3.3.sh
   sudo ./05_install_build_deps.sh
   sudo ./06_build_acrn.sh
   sudo ./07_install_acrn_binary.sh
