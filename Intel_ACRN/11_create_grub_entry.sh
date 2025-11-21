@@ -73,6 +73,29 @@ echo ""
 # Get GRUB parameters from current config
 GRUB_PARAMS=$(grep "^GRUB_CMDLINE_LINUX=" /etc/default/grub | sed 's/^GRUB_CMDLINE_LINUX=//' | tr -d '"' || echo "")
 
+# Ensure console parameters are included for ACRN
+# Remove existing console parameters to avoid duplicates
+GRUB_PARAMS=$(echo "$GRUB_PARAMS" | sed 's/console=[^ ]*//g' | sed 's/  */ /g' | sed 's/^ //' | sed 's/ $//')
+
+# Ensure intel_iommu=on is included (CRITICAL for ACRN Service VM)
+if ! echo "$GRUB_PARAMS" | grep -q "intel_iommu=on"; then
+    if [ -n "$GRUB_PARAMS" ]; then
+        GRUB_PARAMS="$GRUB_PARAMS intel_iommu=on"
+    else
+        GRUB_PARAMS="intel_iommu=on"
+    fi
+    echo "✓ Added intel_iommu=on to Service VM parameters"
+fi
+
+# Add console parameters for Service VM
+# Use both VGA and serial console for better compatibility
+CONSOLE_PARAMS="console=tty0 console=ttyS0,115200n8"
+if [ -n "$GRUB_PARAMS" ]; then
+    SERVICE_VM_PARAMS="$CONSOLE_PARAMS $GRUB_PARAMS"
+else
+    SERVICE_VM_PARAMS="$CONSOLE_PARAMS"
+fi
+
 # Create GRUB entry
 GRUB_ENTRY="/etc/grub.d/40_custom_acrn"
 
@@ -90,18 +113,36 @@ menuentry 'ACRN Hypervisor' --class ubuntu --class gnu-linux --class gnu --class
     insmod ext2
     
     echo 'Loading ACRN Hypervisor...'
+    # ACRN hypervisor (console configured at build time)
     multiboot2 /boot/acrn.bin
     
     echo 'Loading Service VM kernel...'
-    module2 $KERNEL root=UUID=$ROOT_UUID ro $GRUB_PARAMS
+    # Service VM kernel with root, console, IOMMU, and other parameters
+    # CRITICAL: intel_iommu=on is required for ACRN Service VM
+    # Note: console parameters are also critical for Service VM boot
+    module2 $KERNEL root=UUID=$ROOT_UUID ro $SERVICE_VM_PARAMS
     
     echo 'Loading Service VM initrd...'
     module2 $INITRD
+    
+    boot
 }
 EOF
 
 chmod +x "$GRUB_ENTRY"
 echo "✓ Created GRUB entry: $GRUB_ENTRY"
+echo ""
+
+# Ensure GRUB menu is visible (user mentioned needing to set this manually)
+GRUB_DEFAULT_FILE="/etc/default/grub"
+if [ -f "$GRUB_DEFAULT_FILE" ]; then
+    # Check if GRUB_TIMEOUT is set and > 0
+    if ! grep -q "^GRUB_TIMEOUT=" "$GRUB_DEFAULT_FILE" || grep -q "^GRUB_TIMEOUT=0" "$GRUB_DEFAULT_FILE"; then
+        echo "⚠️  GRUB_TIMEOUT is 0 or not set - menu may be hidden"
+        echo "   Consider setting GRUB_TIMEOUT=5 in /etc/default/grub"
+        echo "   Or set GRUB_HIDDEN_TIMEOUT=0 to always show menu"
+    fi
+fi
 echo ""
 
 # Update GRUB

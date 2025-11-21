@@ -136,6 +136,9 @@ for pkg in defusedxml lxml elementpath xmlschema tqdm kconfiglib; do
         # For elementpath, ensure version >= 2.5.0 but < 3.0.0
         if [ "$pkg" = "elementpath" ]; then
             MISSING_DEPS="$MISSING_DEPS 'elementpath>=2.5.0,<3.0.0'"
+        elif [ "$pkg" = "xmlschema" ]; then
+            # xmlschema needs to be >= 2.0.0 for Python 3.12 compatibility
+            MISSING_DEPS="$MISSING_DEPS 'xmlschema>=2.0.0'"
         else
             MISSING_DEPS="$MISSING_DEPS $pkg"
         fi
@@ -147,6 +150,13 @@ for pkg in defusedxml lxml elementpath xmlschema tqdm kconfiglib; do
             if echo "$ELEMENTPATH_VERSION" | grep -q "^3\."; then
                 echo "⚠️  elementpath version $ELEMENTPATH_VERSION is incompatible (needs <3.0.0)"
                 MISSING_DEPS="$MISSING_DEPS 'elementpath>=2.5.0,<3.0.0'"
+            fi
+        # Check xmlschema compatibility with Python 3.12
+        elif [ "$pkg" = "xmlschema" ]; then
+            if ! python3 -c "import xmlschema; from xmlschema.validators.schemas import XMLSchema10" 2>/dev/null; then
+                echo "⚠️  xmlschema is installed but incompatible with Python 3.12"
+                echo "   Need to upgrade xmlschema to >= 2.0.0"
+                MISSING_DEPS="$MISSING_DEPS 'xmlschema>=2.0.0'"
             fi
         fi
     fi
@@ -173,6 +183,12 @@ if [ -n "$MISSING_DEPS" ]; then
             echo "Uninstalling incompatible elementpath $CURRENT_EP..."
             $PIP_CMD uninstall -y elementpath 2>/dev/null || true
         fi
+    fi
+    
+    # If xmlschema is incompatible, upgrade it
+    if echo "$MISSING_DEPS" | grep -q "xmlschema"; then
+        echo "Upgrading xmlschema for Python 3.12 compatibility..."
+        $PIP_CMD install --upgrade $PIP_FLAGS 'xmlschema>=2.0.0' 2>&1 | tee -a "$PROJECT_ROOT/logs/python_deps.log" || true
     fi
     
     # Try to install (handle version constraints properly)
@@ -260,20 +276,25 @@ BUILD_CMD="make BOARD=$BOARD SCENARIO=$SCENARIO O=build hypervisor RELEASE=1"
 if [ "$PATH_HAS_SPACES" = true ] && [ -L "$BUILD_DIR_SYMLINK" ]; then
     echo "Building from symlink without spaces..."
     cd "$BUILD_DIR_SYMLINK"
+    # Use set -o pipefail to capture make exit code correctly
+    set -o pipefail
     if $BUILD_CMD 2>&1 | grep -v "FutureWarning\|XMLSchemaAssertPathWarning" | tee "$PROJECT_ROOT/logs/acrn_build.log"; then
         BUILD_SUCCESS=true
     else
         BUILD_SUCCESS=false
     fi
+    set +o pipefail
     cd "$ACRN_DIR"
 else
     # Normal build (no spaces or symlink failed)
     # Use RELEASE=1 to reduce validation strictness (already in BUILD_CMD)
+    set -o pipefail
     if $BUILD_CMD 2>&1 | grep -v "FutureWarning\|XMLSchemaAssertPathWarning" | tee "$PROJECT_ROOT/logs/acrn_build.log"; then
         BUILD_SUCCESS=true
     else
         BUILD_SUCCESS=false
     fi
+    set +o pipefail
 fi
 
 # Clean up symlink if we created one
@@ -299,10 +320,12 @@ if [ "$BUILD_SUCCESS" = false ]; then
         echo ""
         
         # Retry build once
+        set -o pipefail
         if make BOARD="$BOARD" SCENARIO="$SCENARIO" O=build hypervisor RELEASE=1 2>&1 | grep -v "FutureWarning\|XMLSchemaAssertPathWarning" | tee -a "$PROJECT_ROOT/logs/acrn_build.log"; then
             BUILD_SUCCESS=true
             echo "✓ Build succeeded after clean"
         fi
+        set +o pipefail
     fi
     
     if [ "$BUILD_SUCCESS" = false ]; then

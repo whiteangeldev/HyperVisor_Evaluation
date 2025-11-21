@@ -78,20 +78,21 @@ apt-get install -y \
 # Python packages required by ACRN config tools
 # Based on misc/config_tools/requirements.txt
 # Note: elementpath must be >=2.5.0 but <3.0.0 (TypedElement removed in 3.x)
+# Note: xmlschema must be >=2.0.0 for Python 3.12 compatibility
 echo "Installing Python packages..."
 pip3 install --break-system-packages \
     kconfiglib \
     defusedxml \
     lxml \
     "elementpath>=2.5.0,<3.0.0" \
-    xmlschema \
+    "xmlschema>=2.0.0" \
     tqdm 2>/dev/null || \
 pip3 install \
     kconfiglib \
     defusedxml \
     lxml \
     "elementpath>=2.5.0,<3.0.0" \
-    xmlschema \
+    "xmlschema>=2.0.0" \
     tqdm || true
 
 echo ""
