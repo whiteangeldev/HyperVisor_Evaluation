@@ -1,0 +1,62 @@
+ACRN Installation Scripts - Execution Order
+============================================
+
+MAIN INSTALLATION WORKFLOW (01-13)
+-----------------------------------
+01_check_bios_iommu.sh              - Check BIOS/IOMMU support
+02_check_cpu_info.sh                - Check CPU information
+03_check_kernel_rt.sh                - Check kernel RT support (optional)
+04_download_acrn_3.3.sh              - Download ACRN source code
+05_install_build_deps.sh              - Install build dependencies
+06_build_acrn.sh                     - Build ACRN hypervisor
+07_install_acrn_binary.sh            - Install ACRN binary to /boot
+08_configure_grub_iommu.sh           - Configure IOMMU in GRUB
+09_configure_cpu_isolation.sh        - Configure CPU isolation
+10_configure_irq_affinity.sh         - Configure IRQ affinity
+11_create_grub_entry.sh              - Create ACRN GRUB boot entry
+12_verify_acrn.sh                    - Verify ACRN is running (AFTER boot)
+13_test_acrn_boot.sh                 - Test boot configuration (BEFORE reboot)
+
+TROUBLESHOOTING SCRIPTS (14-20)
+--------------------------------
+14_diagnose_boot_issue.sh            - Diagnose boot problems
+15_fix_grub_entry.sh                 - Fix GRUB entry (adds intel_iommu=on)
+16_fix_elementpath_compatibility.sh  - Fix Python dependency issues
+17_clean_grub_entry.sh               - Clean GRUB entry (removes duplicates)
+18_verify_grub_and_boot.sh           - Verify GRUB entry before booting
+19_fix_duplicate_grub_entries.sh     - Fix duplicate GRUB entries
+20_quick_fix_duplicates.sh           - Quick fix for duplicate entries
+
+QUICK REFERENCE
+---------------
+Standard Installation:
+  sudo ./01_check_bios_iommu.sh
+  sudo ./02_check_cpu_info.sh
+  sudo ./03_check_kernel_rt.sh
+  sudo ./04_download_acrn_3.3.sh
+  sudo ./05_install_build_deps.sh
+  sudo ./06_build_acrn.sh
+  sudo ./07_install_acrn_binary.sh
+  sudo ./08_configure_grub_iommu.sh
+  sudo ./09_configure_cpu_isolation.sh
+  sudo ./10_configure_irq_affinity.sh
+  sudo ./11_create_grub_entry.sh
+  sudo ./13_test_acrn_boot.sh
+  sudo reboot
+  ./12_verify_acrn.sh
+
+If Build Fails:
+  sudo ./16_fix_elementpath_compatibility.sh
+  sudo pip3 install --break-system-packages --upgrade 'elementpath>=4.0.0' 'xmlschema>=2.0.0'
+  sudo ./06_build_acrn.sh
+
+If Boot Fails:
+  sudo ./14_diagnose_boot_issue.sh
+  sudo ./15_fix_grub_entry.sh
+  sudo ./18_verify_grub_and_boot.sh
+  sudo reboot
+
+If Multiple ACRN Entries in GRUB:
+  sudo ./19_fix_duplicate_grub_entries.sh
+  sudo reboot
+
