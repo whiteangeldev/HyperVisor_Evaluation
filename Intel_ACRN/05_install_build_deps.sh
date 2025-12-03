@@ -77,23 +77,23 @@ apt-get install -y \
 
 # Python packages required by ACRN config tools
 # Based on misc/config_tools/requirements.txt
-# Note: elementpath must be >=2.5.0 but <3.0.0 (TypedElement removed in 3.x)
-# Note: xmlschema must be >=2.0.0 for Python 3.12 compatibility
-echo "Installing Python packages..."
-pip3 install --break-system-packages \
+# Note: ACRN 3.3 needs elementpath>=4 after running 16_fix_elementpath_compatibility.sh
+#       Pin xmlschema to 2.0.0 to avoid resolver backtracking on Ubuntu 24.04
+echo "Installing Python packages (system-wide with --break-system-packages)..."
+pip3 install --quiet --break-system-packages --upgrade \
     kconfiglib \
     defusedxml \
     lxml \
-    "elementpath>=2.5.0,<3.0.0" \
-    "xmlschema>=2.0.0" \
-    tqdm 2>/dev/null || \
-pip3 install \
-    kconfiglib \
-    defusedxml \
-    lxml \
-    "elementpath>=2.5.0,<3.0.0" \
-    "xmlschema>=2.0.0" \
-    tqdm || true
+    tqdm \
+    "xmlschema==2.5.1" \
+    "elementpath==4.1.5" || {
+        echo "⚠️  pip installation failed even with --break-system-packages"
+        echo "   You may install inside a venv instead:"
+        echo "     python3 -m venv ~/acrn-venv && source ~/acrn-venv/bin/activate"
+        echo "     pip install kconfiglib defusedxml lxml tqdm xmlschema==2.5.1 elementpath==4.1.5"
+    }
+
+echo "Reminder: run ./16_fix_elementpath_compatibility.sh after cloning ACRN to align with the newer elementpath."
 
 echo ""
 echo "========================================"

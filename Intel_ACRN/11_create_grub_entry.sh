@@ -125,6 +125,19 @@ menuentry 'ACRN Hypervisor' --class ubuntu --class gnu-linux --class gnu --class
     echo 'Loading Service VM initrd...'
     module2 $INITRD
     
+    echo 'Booting ACRN Hypervisor...'
+    boot
+
+    echo 'Booting Service VM...'
+    boot
+
+    echo 'Booting Service VM...'
+    boot
+
+    echo 'Booting Service VM...'
+    boot
+
+    echo 'Booting Service VM...'
     boot
 }
 EOF
