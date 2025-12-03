@@ -22,15 +22,31 @@ echo "========================================"
 echo "Timestamp: $(date '+%Y-%m-%d %H:%M:%S')"
 echo ""
 
-# Find ACRN binary
+# Find ACRN binary - PRIORITIZE ELF FORMAT (.32.out) for GRUB multiboot2
 ACRN_BINARY=""
-if [ -f "$BUILD_DIR/hypervisor/acrn.bin" ]; then
-    ACRN_BINARY="$BUILD_DIR/hypervisor/acrn.bin"
-elif [ -f "$BUILD_DIR/hypervisor/acrn.32.out" ]; then
+ACRN_INSTALL_NAME=""
+
+if [ -f "$BUILD_DIR/hypervisor/acrn.32.out" ]; then
     ACRN_BINARY="$BUILD_DIR/hypervisor/acrn.32.out"
+    ACRN_INSTALL_NAME="acrn.32.out"
+elif [ -f "$BUILD_DIR/hypervisor/acrn.64.out" ]; then
+    ACRN_BINARY="$BUILD_DIR/hypervisor/acrn.64.out"
+    ACRN_INSTALL_NAME="acrn.64.out"
+elif [ -f "$BUILD_DIR/hypervisor/acrn.bin" ]; then
+    ACRN_BINARY="$BUILD_DIR/hypervisor/acrn.bin"
+    ACRN_INSTALL_NAME="acrn.bin"
+    echo "⚠️  WARNING: acrn.bin is raw binary format"
+    echo "   GRUB multiboot2 requires ELF format (.32.out or .64.out)"
+    echo "   This binary may not work with multiboot2!"
 else
     echo "Searching for ACRN binary..."
-    ACRN_BINARY=$(find "$BUILD_DIR" -name "acrn.bin" -o -name "acrn.*.out" 2>/dev/null | head -1)
+    ACRN_BINARY=$(find "$BUILD_DIR" -name "acrn.*.out" -o -name "acrn.bin" 2>/dev/null | grep -E "acrn\.(32|64)\.out$" | head -1)
+    if [ -z "$ACRN_BINARY" ]; then
+        ACRN_BINARY=$(find "$BUILD_DIR" -name "acrn.bin" 2>/dev/null | head -1)
+    fi
+    if [ -n "$ACRN_BINARY" ]; then
+        ACRN_INSTALL_NAME=$(basename "$ACRN_BINARY")
+    fi
 fi
 
 if [ -z "$ACRN_BINARY" ] || [ ! -f "$ACRN_BINARY" ]; then
@@ -39,14 +55,37 @@ if [ -z "$ACRN_BINARY" ] || [ ! -f "$ACRN_BINARY" ]; then
 fi
 
 echo "Found ACRN binary: $ACRN_BINARY"
+file "$ACRN_BINARY"
 ls -lh "$ACRN_BINARY"
+echo ""
+
+# Verify it's an ELF executable (required for GRUB multiboot2)
+if file "$ACRN_BINARY" | grep -q "ELF.*executable"; then
+    echo "✓ Binary is ELF executable (compatible with GRUB multiboot2)"
+elif file "$ACRN_BINARY" | grep -q "data"; then
+    echo "❌ WARNING: Binary is raw data format, NOT ELF!"
+    echo "   GRUB multiboot2 command requires ELF format"
+    echo "   Boot will likely FAIL!"
+    echo ""
+    read -p "Continue anyway? (y/N) " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        exit 1
+    fi
+fi
 echo ""
 
 # Install hypervisor binary
 echo "Installing ACRN hypervisor to /boot..."
-cp "$ACRN_BINARY" /boot/acrn.bin
-chmod 644 /boot/acrn.bin
-echo "✓ Installed to /boot/acrn.bin"
+cp "$ACRN_BINARY" "/boot/$ACRN_INSTALL_NAME"
+chmod 644 "/boot/$ACRN_INSTALL_NAME"
+echo "✓ Installed to /boot/$ACRN_INSTALL_NAME"
+
+# Create symlink for compatibility
+if [ "$ACRN_INSTALL_NAME" != "acrn.bin" ]; then
+    ln -sf "/boot/$ACRN_INSTALL_NAME" /boot/acrn.bin
+    echo "✓ Created symlink /boot/acrn.bin -> /boot/$ACRN_INSTALL_NAME"
+fi
 echo ""
 
 # Install ACRN tools if available
@@ -93,9 +132,9 @@ echo "✓ ACRN installation completed"
 echo "========================================"
 echo ""
 echo "Installed files:"
-echo "  /boot/acrn.bin"
+echo "  /boot/$ACRN_INSTALL_NAME"
 [ -f /usr/bin/acrn-dm ] && echo "  /usr/bin/acrn-dm"
 [ -f /usr/bin/acrnctl ] && echo "  /usr/bin/acrnctl"
 [ -f /usr/bin/acrnlog ] && echo "  /usr/bin/acrnlog"
 echo ""
-
+echo "Next: Run sudo ./08_configure_grub_iommu.sh"

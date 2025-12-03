@@ -17,12 +17,30 @@ echo "========================================"
 echo "Timestamp: $(date '+%Y-%m-%d %H:%M:%S')"
 echo ""
 
-# Check if ACRN binary exists
-if [ ! -f /boot/acrn.bin ]; then
-    echo "❌ ACRN binary not found: /boot/acrn.bin"
+# Check if ACRN binary exists (prefer ELF format)
+ACRN_BINARY=""
+if [ -f /boot/acrn.32.out ]; then
+    ACRN_BINARY="/boot/acrn.32.out"
+elif [ -f /boot/acrn.64.out ]; then
+    ACRN_BINARY="/boot/acrn.64.out"
+elif [ -f /boot/acrn.bin ]; then
+    ACRN_BINARY="/boot/acrn.bin"
+    # Check if it's ELF or raw binary
+    if ! file /boot/acrn.bin | grep -q "ELF.*executable"; then
+        echo "⚠️  WARNING: /boot/acrn.bin is NOT an ELF executable"
+        echo "   GRUB multiboot2 requires ELF format"
+        echo "   Boot may fail!"
+        echo ""
+    fi
+else
+    echo "❌ ACRN binary not found in /boot/"
     echo "   Run 07_install_acrn_binary.sh first"
     exit 1
 fi
+
+echo "Using ACRN binary: $ACRN_BINARY"
+file "$ACRN_BINARY"
+echo ""
 
 # Get root UUID
 ROOT_UUID=$(findmnt -n -o UUID /)
@@ -73,7 +91,6 @@ echo ""
 # Get GRUB parameters from current config
 GRUB_PARAMS=$(grep "^GRUB_CMDLINE_LINUX=" /etc/default/grub | sed 's/^GRUB_CMDLINE_LINUX=//' | tr -d '"' || echo "")
 
-# Ensure console parameters are included for ACRN
 # Remove existing console parameters to avoid duplicates
 GRUB_PARAMS=$(echo "$GRUB_PARAMS" | sed 's/console=[^ ]*//g' | sed 's/  */ /g' | sed 's/^ //' | sed 's/ $//')
 
@@ -88,7 +105,6 @@ if ! echo "$GRUB_PARAMS" | grep -q "intel_iommu=on"; then
 fi
 
 # Add console parameters for Service VM
-# Use both VGA and serial console for better compatibility
 CONSOLE_PARAMS="console=tty0 console=ttyS0,115200n8"
 if [ -n "$GRUB_PARAMS" ]; then
     SERVICE_VM_PARAMS="$CONSOLE_PARAMS $GRUB_PARAMS"
@@ -102,7 +118,7 @@ GRUB_ENTRY="/etc/grub.d/40_custom_acrn"
 cat > "$GRUB_ENTRY" << EOF
 #!/bin/sh
 exec tail -n +3 \$0
-# ACRN Hypervisor Boot Entry
+# ACRN Hypervisor Boot Entry (v3.2)
 # Generated: $(date '+%Y-%m-%d %H:%M:%S')
 
 menuentry 'ACRN Hypervisor' --class ubuntu --class gnu-linux --class gnu --class os {
@@ -113,31 +129,17 @@ menuentry 'ACRN Hypervisor' --class ubuntu --class gnu-linux --class gnu --class
     insmod ext2
     
     echo 'Loading ACRN Hypervisor...'
-    # ACRN hypervisor (console configured at build time)
-    multiboot2 /boot/acrn.bin
+    # ACRN hypervisor (ELF format required for multiboot2)
+    multiboot2 $ACRN_BINARY
     
     echo 'Loading Service VM kernel...'
     # Service VM kernel with root, console, IOMMU, and other parameters
     # CRITICAL: intel_iommu=on is required for ACRN Service VM
-    # Note: console parameters are also critical for Service VM boot
     module2 $KERNEL root=UUID=$ROOT_UUID ro $SERVICE_VM_PARAMS
     
     echo 'Loading Service VM initrd...'
     module2 $INITRD
     
-    echo 'Booting ACRN Hypervisor...'
-    boot
-
-    echo 'Booting Service VM...'
-    boot
-
-    echo 'Booting Service VM...'
-    boot
-
-    echo 'Booting Service VM...'
-    boot
-
-    echo 'Booting Service VM...'
     boot
 }
 EOF
@@ -180,4 +182,3 @@ echo "Next steps:"
 echo "1. Review GRUB entry: cat $GRUB_ENTRY"
 echo "2. Reboot and select 'ACRN Hypervisor' from GRUB menu"
 echo "3. After boot, run: ./12_verify_acrn.sh"
-
